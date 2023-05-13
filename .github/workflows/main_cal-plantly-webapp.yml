@@ -32,7 +32,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: node-app
-          path: build.zip
+          path: frontend/build.zip
     
 
   deploy:
