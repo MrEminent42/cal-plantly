@@ -1,3 +1,6 @@
+# Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
+# More GitHub Actions for Azure: https://github.com/Azure/actions
+
 name: Build and deploy Node.js app to Azure Web App - cal-plantly-webapp
 
 on:
@@ -14,37 +17,23 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Set up Node.js version
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v1
         with:
           node-version: '18.x'
 
-      - name: npm install, build (frontend)
+      - name: npm install, build
         run: |
           cd frontend
           npm install
           npm run build --if-present
           zip -r build.zip build
-          mv build.zip ../build-frontend.zip
 
-      - name: npm install, build (backend)
-        run: |
-          cd backend
-          npm install
-          npm run build --if-present
-          zip -r build.zip build
-          mv build.zip ../build-backend.zip
-
-      - name: Upload frontend artifact for deployment job
+      - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2
         with:
-          name: node-app-frontend
-          path: build-frontend.zip
-
-      - name: Upload backend artifact for deployment job
-        uses: actions/upload-artifact@v2
-        with:
-          name: node-app-backend
-          path: build-backend.zip
+          name: node-app
+          path: build.zip
+    
 
   deploy:
     runs-on: ubuntu-latest
@@ -54,36 +43,16 @@ jobs:
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
 
     steps:
-      - name: Download frontend artifact from build job
+      - name: Download artifact from build job
         uses: actions/download-artifact@v2
         with:
-          name: node-app-frontend
+          name: node-app
 
-      - name: Download backend artifact from build job
-        uses: actions/download-artifact@v2
-        with:
-          name: node-app-backend
-
-      - name: Unzip frontend build
-        run: unzip node-app-frontend/build-frontend.zip
-
-      - name: Unzip backend build
-        run: unzip node-app-backend/build-backend.zip
-
-      - name: 'Deploy frontend to Azure Web App'
-        id: deploy-to-webapp-frontend
+      - name: 'Deploy to Azure Web App'
+        id: deploy-to-webapp
         uses: azure/webapps-deploy@v2
         with:
           app-name: 'cal-plantly-webapp'
           slot-name: 'Production'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_30529618600941BC9D56898DFDD64ECD }}
-          package: './frontend'
-
-      - name: 'Deploy backend to Azure Web App'
-        id: deploy-to-webapp-backend
-        uses: azure/webapps-deploy@v2
-        with:
-          app-name: 'cal-plantly-webapp-backend'
-          slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_30529618600941BC9D56898DFDD64ECD }}
-          package: './backend'
+          package: build.zip
