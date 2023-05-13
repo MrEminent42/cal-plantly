@@ -47,7 +47,6 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: node-app
-          path: ${{ runner.temp }}
 
       - name: 'Deploy to Azure Web App'
         id: deploy-to-webapp
@@ -56,4 +55,4 @@ jobs:
           app-name: 'cal-plantly-webapp'
           slot-name: 'Production'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_30529618600941BC9D56898DFDD64ECD }}
-          package: ${{ runner.temp }}/build.zip
+          package: build.zip
