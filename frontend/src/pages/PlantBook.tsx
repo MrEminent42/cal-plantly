@@ -8,7 +8,7 @@ const Home = () => {
             flexGrow: 1,
         }}>
 
-            home screen
+            PlantBook
 
         </HomeDiv>
     )
@@ -16,7 +16,7 @@ const Home = () => {
 
 export default Home
 
-const HomeDiv = styled(Box)(({ theme }) => ({
+const HomeDiv = styled(Box)(() => ({
     display: 'flex',
     border: '1px solid red',
     flex: 1,

@@ -24,22 +24,23 @@ const TopBar = () => {
             justifyContent: 'space-between',
         }}>
             <Chip sx={{ backgroundColor: 'red', flex: 1 }}>
-                <img src={`https:${icon}`} alt="icon" />
+            <img src={`https:${icon}`} alt="icon" />
+
             </Chip>
-            <Chip sx={{ backgroundColor: 'red', flex: 1 }}>
+            <Chip sx={{ flex: 1 }}>
                 Points
             </Chip>
-            <Chip sx={{ backgroundColor: 'red', flex: 1 }}>
+            <Chip sx={{ flex: 1 }}>
                 hi
             </Chip>
-        </AppBar>
+        </AppBar >
     )
 }
 
 export default TopBar
 
 const Chip = styled(`div`)`
-    background-color: #885cf7;
+    background-color: #a4af69;
     border-radius: 10px;
     padding: 10px;
     margin: 10px;
