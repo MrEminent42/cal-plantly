@@ -9,7 +9,7 @@ const option: IAzureMapOptions = {
     },
 }
 const Map : React.FC = () => (
-    <div style={{height: '70vh'}}>
+    <div style={{flex:1}}>
         <AzureMapsProvider>
             <AzureMap options={option}>
             </AzureMap>

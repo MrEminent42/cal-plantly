@@ -25,7 +25,6 @@ const TopBar = () => {
         }}>
             <Chip sx={{ backgroundColor: 'red', flex: 1 }}>
             <img src={`https:${icon}`} alt="icon" />
-
             </Chip>
             <Chip sx={{ flex: 1 }}>
                 Points

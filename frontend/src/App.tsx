@@ -9,7 +9,7 @@ import Map from './components/Map/Map';
 
 function App() {
 
-  const [showBook, setShowBook] = useState(true);
+  const [showBook, setShowBook] = useState(false);
   return (
     <div style={{
       border: '1px dotted blue',
@@ -20,6 +20,7 @@ function App() {
       <ThemeProvider theme={theme}>
 
         <TopBar />
+        {/* <Map /> */}
 
         <p>Welcome to Cal Plantly!</p>
 
