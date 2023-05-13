@@ -4,6 +4,7 @@ import { ThemeProvider } from '@mui/material';
 import theme from './config/config.theme';
 import TopBar from './components/TopBar/TopBar';
 import ActionButton from './components/ActionButton';
+import Map from './components/Map/Map';
 
 function App() {
   return (
@@ -13,7 +14,7 @@ function App() {
 
         <p>Welcome to Cal Plantly!</p>
         <Home />
-
+        <Map />
         <ActionButton />
       </ThemeProvider>
     </div>

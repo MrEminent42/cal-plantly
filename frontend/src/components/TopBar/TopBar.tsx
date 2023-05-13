@@ -1,10 +1,22 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { styled } from '@mui/system';
 
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
+import fetchWeatherData from '../../api/getWeather';
 
 const TopBar = () => {
+
+    const [icon, setIcon] = useState();
+
+    async function fetchData(){
+        await fetchWeatherData(process.env.REACT_APP_WEATHER_API_KEY || '', '93410').then((iconData) => {
+            setIcon(iconData);
+        });
+    }
+
+    fetchData();
+
     return (
         <AppBar position="static" sx={{
             display: 'flex',
@@ -12,7 +24,7 @@ const TopBar = () => {
             justifyContent: 'space-between',
         }}>
             <Chip sx={{ backgroundColor: 'red', flex: 1 }}>
-                Weather
+                <img src={`https:${icon}`} alt="icon" />
             </Chip>
             <Chip sx={{ backgroundColor: 'red', flex: 1 }}>
                 Points
