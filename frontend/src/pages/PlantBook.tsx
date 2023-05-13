@@ -8,7 +8,7 @@ const Home = () => {
             flexGrow: 1,
         }}>
 
-            home screen
+            PlantBook
 
         </HomeDiv>
     )
