@@ -16,7 +16,7 @@ const theme = createTheme({
         },
     },
     typography: {
-        fontFamily: 'Poppins',
+        fontFamily: 'Leafy Plant Sans Free',
         h5: {
             fontWeight: '700',
             fontSize: '.9rem',
