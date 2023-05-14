@@ -4,32 +4,28 @@ import PlantBook from './pages/PlantBook';
 import { ThemeProvider } from '@mui/material';
 import theme from './config/config.theme';
 import TopBar from './components/TopBar/TopBar';
-import ActionButton from './components/ActionButton';
 import Map from './components/Map/Map';
+import ActionButton from './components/ActionButton'; 
+
 
 function App() {
 
   const [showBook, setShowBook] = useState(false);
   return (
     <div style={{
-      border: '1px dotted blue',
-      height: '99vh',
+      height: '100vh',
       display: 'flex',
       flexDirection: 'column',
     }}>
       <ThemeProvider theme={theme}>
 
         <TopBar />
-        {/* <Map /> */}
-
-        <p>Welcome to Cal Plantly!</p>
 
         {
           showBook ? <PlantBook /> : <Home />
         }
-
-        <ActionButton />
       </ThemeProvider>
+      
     </div>
   );
 }

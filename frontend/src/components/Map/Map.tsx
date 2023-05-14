@@ -94,24 +94,29 @@ const MarkersExample: React.FC = () => {
     longitude: -122.9603,
   });
   
+  const [loading, setLoading] = useState(true);
+
   const [point1, setPoint1] = useState(new data.Position(location.longitude, location.latitude));
   
   useEffect(() => {
-    navigator.geolocation.getCurrentPosition(
-      position => {
-        const { longitude, latitude } = position.coords;
-        setLocation({ latitude, longitude });
-        setPoint1(new data.Position(longitude, latitude));
-        setMarkers([new data.Position(longitude, latitude)]); // add point1 to markers array
-      },
-      error => {
-        console.error(error);
-      }
-    );
+    const interval = setInterval(() => {
+      navigator.geolocation.getCurrentPosition(
+        position => {
+          const { longitude, latitude } = position.coords;
+          setLocation({ latitude, longitude });
+          setPoint1(new data.Position(longitude, latitude));
+          setMarkers([new data.Position(longitude, latitude)]); // add point1 to markers array
+          setLoading(false);
+        },
+        error => {
+          console.error(error);
+        }
+      );
+    }, 30000); // call the function every 30 seconds
+  
+    return () => clearInterval(interval);
   }, [location]);
-  
-  console.log(point1);
-  
+    
 
 
   const [markers, setMarkers] = useState([point1]);
@@ -136,6 +141,10 @@ const MarkersExample: React.FC = () => {
   );
 
   console.log('MarkerExample RENDER');
+
+  if (loading) {
+    return <div>Please wait 30 seconds while we receive your location</div>;
+  }
 
 return (
     <>

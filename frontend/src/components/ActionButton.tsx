@@ -17,52 +17,64 @@ const ActionButton = () => {
     var thing = process.env.REACT_APP_HELLO;
 
     return (
-        <Box sx={{
-            position: 'fixed',
-            bottom: 20,
-            right: 20,
-            borderColor: 'red',
-            borderWidth: 5,
-            // backgroundColor: 'aqua',
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            gap: '10px',
-        }}>
-            <Grow in={menuOpen}>
-                <Fab size="small">
-                    <EmojiEventsIcon />
+        <Box>
+            <Box sx={{
+                borderColor: 'red',
+                borderWidth: 5,
+                // backgroundColor: 'aqua',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                gap: '10px',
+            }}>
+
+
+                <Fab
+                    color='secondary'
+                    disabled={false}
+                    onClick={() => setMenuOpen(!menuOpen)}
+                >
+                    <AddIcon />
                 </Fab>
-            </Grow>
+            </Box>
+            <Box sx={{
+
+                borderColor: 'red',
+                borderWidth: 5,
+                // backgroundColor: 'aqua',
+                display: 'flex',
+                flexDirection: 'row',
+                alignItems: 'center',
+                gap: '10px',
+            }}>
+                <Grow in={menuOpen}>
+                    <Fab size="small">
+                        <EmojiEventsIcon />
+                    </Fab>
+                </Grow>
 
 
-            <Grow in={menuOpen}>
-                <Fab size="small" >
-                    <Person3Icon />
-                </Fab>
-            </Grow>
+                <Grow in={menuOpen}>
+                    <Fab size="small" >
+                        <Person3Icon />
+                    </Fab>
+                </Grow>
 
-            <Grow in={menuOpen} >
-                <Fab size="small">
-                    <LibraryBooksIcon />
-                </Fab>
-            </Grow>
+                <Grow in={menuOpen} >
+                    <Fab size="small">
+                        <LibraryBooksIcon />
+                    </Fab>
+                </Grow>
 
-            <Grow in={menuOpen}>
-                <Fab size="small">
-                    <BusinessCenterIcon />
-                </Fab>
-            </Grow>
-
-
-            <Fab
-                color='secondary'
-                disabled={false}
-                onClick={() => setMenuOpen(!menuOpen)}
-            >
-                <AddIcon />
-            </Fab>
+                <Grow in={menuOpen}>
+                    <Fab size="small">
+                        <BusinessCenterIcon />
+                    </Fab>
+                </Grow>
+            </Box>
         </Box>
+
+
     )
 }
 
