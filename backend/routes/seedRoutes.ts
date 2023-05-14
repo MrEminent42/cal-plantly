@@ -2,6 +2,8 @@ import { Request, Response } from "express";
 import Seed from "../schemas/seed";
 const express = require("express");
 const router = express.Router();
+const sql = require("mssql");
+const dbConfig = require("../dbConfig");
 
 //temporary array of seed objects
 const seeds: Seed[] = [
