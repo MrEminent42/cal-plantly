@@ -7,7 +7,7 @@ import { Button, Typography } from '@mui/material';
 import { getAuth, signOut } from '@firebase/auth';
 import fetchWeatherData from '../../api/getWeather';
 
-import ActionButton from '../ActionButton';
+import ActionButton from './ActionButton';
 
 const TopBar = () => {
 
@@ -68,7 +68,6 @@ const SideChip = styled(Box)(() => ({
     borderRadius: '10px',
     margin: '10px',
     flex: .1,
-    // border: '1px solid red',
     textAlign: 'center',
 }))
 

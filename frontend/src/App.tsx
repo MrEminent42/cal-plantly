@@ -17,7 +17,7 @@ import ProtectedRoute from './components/ProtectedRoute';
 import Login from './pages/Login';
 import TopBar from './components/TopBar/TopBar';
 import Map from './components/Map/Map';
-import ActionButton from './components/ActionButton';
+import ActionButton from './components/TopBar/ActionButton';
 
 
 function App() {
