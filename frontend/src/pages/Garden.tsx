@@ -16,7 +16,7 @@ const Garden = () => {
   const [garden, setGarden] = useState<GardenInfo | null>(null);
   const [plants, setPlants] = useState<PlantInfo[]>([]);
 
-  const plantImages = ["/images/dirtPoppyBloom.png", "/images/dirtValerianBloom.png", "/images/dirtVioletBloom.png"];
+  const plantImages = ["", "/images/dirtPoppyBloom.png", "/images/dirtValerianBloom.png", "/images/dirtVioletBloom.png"];
 
   const updatePlants = () => {
     if (!params.id) return;
@@ -88,7 +88,7 @@ const Garden = () => {
         {Array.from(Array(16)).map((_, index) => (
           <Grid item xs={12} lg={3} key={index}>
             <Paper
-              onClick={() => handleClick(index)}
+              onClick={() => handleClick(plants[index].SpeciesId)}
               sx={{
                 backgroundColor: plants[index] ? '' : 'lightgray',
                 height: 100,
@@ -107,7 +107,7 @@ const Garden = () => {
                 </Box>
 
                 {/* box for plant name */}
-                <Box sx={{ flex: 1 }}>
+                <Box sx={{ flex: 1, pl: 3 }}>
 
                   <Typography>
                     {plants[index].Name}
