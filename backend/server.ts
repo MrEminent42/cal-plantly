@@ -1,5 +1,6 @@
 const express = require('express');
 const dotenv = require('dotenv');
+const cors = require('cors');
 const plantRoutes = require('./routes/plantRoutes');
 const gardenRoutes = require('./routes/gardenRoutes');
 const userRoutes = require('./routes/userRoutes');
@@ -11,6 +12,7 @@ const app = express();
 const port = process.env.PORT;
 
 app.use(express.json());
+app.use(cors());
 
 app.use('/', plantRoutes);
 app.use('/', gardenRoutes);

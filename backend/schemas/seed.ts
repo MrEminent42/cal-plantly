@@ -1,9 +1,7 @@
 interface Seed {
   id: number;
-  name: string;
-  type: string;
-  amount: number;
-  owner: string;
+  speciesId: number;
+  ownerId: string;
 }
 
 export default Seed;

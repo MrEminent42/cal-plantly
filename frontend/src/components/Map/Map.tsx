@@ -13,7 +13,6 @@ import {
   IAzureMapOptions,
 } from 'react-azure-maps';
 import { AuthenticationType, data, HtmlMarkerOptions, SymbolLayerOptions } from 'azure-maps-control';
-import { Button, Chip } from '@mui/material';
 
 function clusterClicked(e: any) {
   console.log('clusterClicked', e);
@@ -100,7 +99,6 @@ const MarkersExample: React.FC = () => {
 
   const updateLocation = () => {
 
-    console.log("updating location");
     navigator.geolocation.getCurrentPosition(
       position => {
         const { longitude, latitude } = position.coords;
@@ -118,7 +116,6 @@ const MarkersExample: React.FC = () => {
 
   useEffect(() => {
     updateLocation();
-    console.log("setting timer");
     const interval = setInterval(updateLocation, 30000); // call the function every 30 seconds
     return () => clearInterval(interval);
   }, []);
@@ -136,7 +133,7 @@ const MarkersExample: React.FC = () => {
         subscriptionKey: process.env.REACT_APP_MAP_API_KEY,
       },
       center: [-120.6603, 35.3001], // Cal Poly SLO coordinates
-      zoom: 16, // Zoom level for Cal Poly SLO
+      zoom: 14, // Zoom level for Cal Poly SLO
     };
   }, []);
 
@@ -151,6 +148,66 @@ const MarkersExample: React.FC = () => {
   if (loading) {
     return <div>Please wait 30 seconds while we receive your location</div>;
   }
+
+
+  // bubble: 
+
+
+  function mouseOn(e: any) {
+    e.map.getCanvas().style.cursor = 'pointer';
+  }
+
+  function mouseLeave(e: any) {
+    e.map.getCanvas().style.cursor = '';
+  }
+
+  function clusterClicked(e: any) {
+    if (e && e.shapes && e.shapes.length > 0 && e.shapes[0].properties.cluster) {
+      //Get the clustered point from the event.
+      const cluster = e.shapes[0];
+
+      //Get the cluster expansion zoom level. This is the zoom level at which the cluster starts to break apart.
+      e.map.sources
+        .getById('BubbleLayer DataSourceProvider')
+        .getClusterExpansionZoom(cluster.properties.cluster_id)
+        .then(function (zoom: any) {
+          //Update the map camera to be centered over the cluster.
+          e.map.setCamera({
+            center: cluster.geometry.coordinates,
+            zoom: zoom,
+            type: 'ease',
+            duration: 200,
+          });
+        });
+    }
+  }
+
+
+  const bubbleLayerOptions = {
+    //Scale the size of the clustered bubble based on the number of points inthe cluster.
+    radius: [
+      'step',
+      ['get', 'point_count'],
+      20, //Default of 20 pixel radius.
+      100,
+      30, //If point_count >= 100, radius is 30 pixels.
+      750,
+      40, //If point_count >= 750, radius is 40 pixels.
+    ],
+
+    //Change the color of the cluster based on the value on the point_cluster property of the cluster.
+    color: [
+      'step',
+      ['get', 'point_count'],
+      'rgba(0,255,0,0.8)', //Default to green.
+      100,
+      'rgba(255,255,0,0.8)', //If the point_count >= 100, color is yellow.
+      750,
+      'rgba(255,0,0,0.8)', //If the point_count >= 100, color is red.
+    ],
+    strokeWidth: 0,
+    filter: ['has', 'point_count'], //Only rendered data points which have a point_count property, which clusters do.
+  };
 
   return (
     <>
@@ -169,10 +226,6 @@ const MarkersExample: React.FC = () => {
               <AzureMapLayerProvider
                 id={'markersExample AzureMapLayerProvider'}
                 options={layerOptions}
-                events={{
-                  click: clusterClicked,
-                  dbclick: clusterClicked,
-                }}
                 lifecycleEvents={{
                   layeradded: () => {
                     console.log('LAYER ADDED TO MAP');
@@ -183,7 +236,62 @@ const MarkersExample: React.FC = () => {
               {memoizedMarkerRender}
               {/* {memoizedHtmlMarkerRender} */}
             </AzureMapDataSourceProvider>
+
+
+
+
+
+
+            <AzureMapDataSourceProvider
+              id={'BubbleLayer DataSourceProvider'}
+              dataFromUrl="https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_month.geojson"
+              options={{
+                //Tell the data source to cluster point data.
+                cluster: true,
+
+                //The radius in pixels to cluster points together.
+                clusterRadius: 100,
+
+                //The maximium zoom level in which clustering occurs.
+                //If you zoom in more than this, all points are rendered as symbols.
+                clusterMaxZoom: 15,
+              }}
+            >
+              <AzureMapLayerProvider
+                id={'BubbleLayer LayerProvider'}
+                options={bubbleLayerOptions}
+                type="BubbleLayer"
+                events={{
+                  mouseenter: mouseOn,
+                  mouseleave: mouseLeave,
+                  click: clusterClicked,
+                }}
+              ></AzureMapLayerProvider>
+              <AzureMapLayerProvider
+                id={'BubbleLayer2 LayerProvider'}
+                options={{
+                  iconOptions: {
+                    image: 'none', //Hide the icon image.
+                  },
+                  textOptions: {
+                    textField: ['get', 'point_count_abbreviated'],
+                    offset: [0, 0.4],
+                  },
+                }}
+                type="SymbolLayer"
+              ></AzureMapLayerProvider>
+              <AzureMapLayerProvider
+                id={'BubbleLayer3 LayerProvider'}
+                options={{
+                  filter: ['!', ['has', 'point_count']], //Filter out clustered points from this layer.
+                }}
+                type="SymbolLayer"
+              ></AzureMapLayerProvider>
+
+            </AzureMapDataSourceProvider>
           </AzureMap>
+
+
         </div>
       </AzureMapsProvider>
     </>

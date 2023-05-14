@@ -1,19 +1,16 @@
 import styled from '@emotion/styled'
 import Grid from '@mui/material/Grid';
 import { Box } from '@mui/system'
-import PlantEntry from '../components/PlantBook/PlantEntry';
+import PlantEntry from '../../components/PlantBook/PlantEntry';
 import "./BookStyle.css";
+import { Navigate, Route, Routes } from 'react-router-dom';
+import PoppyPage from './PoppyPage';
 
 
 const PlantBook = () => {
-    return (
-        <HomeDiv style={{
-            flexGrow: 1,
-            flexDirection: 'column'
-        }}>
 
-            <div className="book-title">Plant Book</div>
-
+    const showMainScreen = () => {
+        return (
             <div className='main-box'>
                 <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }}>
                     {Array.from(Array(3)).map((_, index) => (
@@ -23,6 +20,26 @@ const PlantBook = () => {
                     ))}
                 </Grid>
             </div>
+        )
+    }
+
+    return (
+        <HomeDiv style={{
+            flexGrow: 1,
+            flexDirection: 'column'
+        }}>
+
+            <div className="book-title">Plant Book</div>
+
+            <Routes>
+                <Route path="/" element={showMainScreen()} />
+                <Route path="/poppy" element={<PoppyPage />} />
+                <Route
+                    path="*"
+                    element={<Navigate to="/game/book" replace />}
+                />
+            </Routes>
+
 
         </HomeDiv>
 

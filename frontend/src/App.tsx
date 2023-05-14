@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import Game from './pages/Game';
-import PlantBook from './pages/PlantBook';
+import PlantBook from './pages/plantbook/PlantBook';
 import { ThemeProvider } from '@mui/material';
 import theme from './config/config.theme';
 
@@ -66,7 +66,6 @@ function App() {
         <BrowserRouter>
           <Routes>
             <Route path="/game/*" element={<ProtectedRoute><Game /></ProtectedRoute>} />
-            <Route path="/plantbook" element={<ProtectedRoute><PlantBook /></ProtectedRoute>} />
             <Route path="/login" element={<Login />} />
             <Route
               path="*"
