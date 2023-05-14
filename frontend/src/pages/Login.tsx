@@ -27,7 +27,7 @@ const Login = () => {
         signInWithPopup(getAuth(), provider).then((result) => {
             // initialize();
             setLoading(false);
-            navigate("/");
+            navigate("/game");
         }).catch((error) => {
             const errorMessage = error.message;
             console.log(errorMessage);

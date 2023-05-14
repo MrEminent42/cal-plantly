@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import Home from './pages/Home';
+import Game from './pages/Game';
 import PlantBook from './pages/PlantBook';
 import { ThemeProvider } from '@mui/material';
 import theme from './config/config.theme';
@@ -15,9 +15,6 @@ import { AuthState, currentUserAtom } from './jotai/authAtoms';
 import { BrowserRouter, Routes, Route, Navigate, useNavigate } from "react-router-dom";
 import ProtectedRoute from './components/ProtectedRoute';
 import Login from './pages/Login';
-import TopBar from './components/TopBar/TopBar';
-import Map from './components/Map/Map';
-import ActionButton from './components/TopBar/ActionButton';
 
 
 function App() {
@@ -58,8 +55,6 @@ function App() {
 
   setupFirebase();
 
-  const [showBook, setShowBook] = useState(true);
-
   return (
     <div style={{
       height: '100vh',
@@ -70,9 +65,13 @@ function App() {
 
         <BrowserRouter>
           <Routes>
-            <Route path="/" element={<ProtectedRoute><Home /></ProtectedRoute>} />
+            <Route path="/game/*" element={<ProtectedRoute><Game /></ProtectedRoute>} />
             <Route path="/plantbook" element={<ProtectedRoute><PlantBook /></ProtectedRoute>} />
             <Route path="/login" element={<Login />} />
+            <Route
+              path="*"
+              element={<Navigate to="/game" replace />}
+            />
           </Routes>
         </BrowserRouter>
 

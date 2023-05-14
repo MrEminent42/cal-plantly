@@ -2,23 +2,21 @@ import styled from '@emotion/styled'
 import React from 'react'
 import { Box } from '@mui/system'
 
-const Home = () => {
+const PlantInfo = () => {
     return (
-        <HomeDiv style={{
-            flexGrow: 1,
-            flexDirection: 'column'
-        }}>
+        <FillDiv>
 
             PlantBook
 
-        </HomeDiv>
+        </FillDiv>
     )
 }
 
-export default Home
+export default PlantInfo
 
-const HomeDiv = styled(Box)(() => ({
+const FillDiv = styled(Box)(() => ({
     display: 'flex',
     border: '1px solid red',
     flex: 1,
+    flexDirection: 'column',
 }))
