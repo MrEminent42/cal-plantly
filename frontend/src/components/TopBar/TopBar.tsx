@@ -37,7 +37,9 @@ const TopBar = () => {
         }}>
             <ActionButton />
             <SideChip>
-                <img src={`https:${icon}`} alt="icon" />
+                {icon && (
+                    <img src={`https://${(icon as string).replace("//", "")}`} alt="icon" />
+                )}
             </SideChip>
             <Chip>
                 <Typography
