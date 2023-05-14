@@ -71,5 +71,17 @@ router.get('/api/gardens/:id/plants', (req: Request, res: Response) => {
   }
 });
 
+//create a new garden
+router.post('/api/gardens', (req: Request, res: Response) => {
+  const { id, name, plants, latitude, longitude, radius } = req.body;
+  if (!id || !name || !plants || !latitude || !longitude || !radius) {
+    return res.status(400).json({ message: 'Incomplete data' });
+  }
+  const newGarden: Garden = { id, name, plants, latitude, longitude, radius };
+  gardens.push(newGarden);
+  res.status(201).json(newGarden);
+});
+
+
 export {};
 module.exports = router;

@@ -61,5 +61,16 @@ router.get('/api/plants/name/:name', (req: Request, res: Response) => {
   }
 });
 
+//create a new plant
+router.post('/api/plants', (req: Request, res: Response) => {
+  const { id, name, state, latitude, longitude, description } = req.body;
+  if (!id || !name || !state || !latitude || !longitude || !description) {
+    return res.status(400).json({ message: 'Incomplete data' });
+  }
+  const newPlant: Plant = { id, name, state, latitude, longitude, description };
+  plants.push(newPlant);
+  res.status(201).json(newPlant);
+});
+
 export {};
 module.exports = router;

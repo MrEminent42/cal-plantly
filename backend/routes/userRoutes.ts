@@ -55,5 +55,16 @@ router.get('/api/users/name/:name', (req: Request, res: Response) => {
   }
 });
 
+//create a new user
+router.post('/api/users', (req: Request, res: Response) => {
+  const { id, name, points, inventory } = req.body;
+  if (!id || !name || !points || !inventory) {
+    return res.status(400).json({ message: 'Incomplete data' });
+  }
+  const newUser: User = { id, name, points, inventory };
+  users.push(newUser);
+  res.status(201).json(newUser);
+});
+
 export {};
 module.exports = router;
