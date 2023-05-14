@@ -85,6 +85,7 @@ const MarkersExample = () => {
   const [loading, setLoading] = useState(true);
   const [userDeniedLocation, setUserDeniedLocation] = useState(false);
   const [showError, setShowError] = useState(false);
+  const [showTooFar, setShowTooFar] = useState(false);
 
   const [point1, setPoint1] = useState(new data.Position(location.longitude, location.latitude));
   const navigate = useNavigate();
@@ -137,7 +138,7 @@ const MarkersExample = () => {
 
 
           if (distance > 0.1) {
-            alert("You are too far away to visit this garden!");
+            setShowTooFar(true);
             return;
           }
 
@@ -339,6 +340,16 @@ const MarkersExample = () => {
       >
         <Alert onClose={() => setShowError(false)} severity="error" variant="filled" sx={{ width: '100%', fontFamily: 'Arial' }}>
           We couldn't get your location ☹️
+        </Alert>
+      </Snackbar>
+
+      <Snackbar
+        open={showTooFar}
+        autoHideDuration={6000}
+        onClose={() => setShowTooFar(false)}
+      >
+        <Alert onClose={() => setShowError(false)} severity="error" variant="filled" sx={{ width: '100%', fontFamily: 'Arial' }}>
+          That garden is too far away!
         </Alert>
       </Snackbar>
     </>
