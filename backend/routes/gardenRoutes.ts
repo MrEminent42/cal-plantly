@@ -18,6 +18,39 @@ router.get("/api/gardens", async (req: Request, res: Response) => {
   }
 });
 
+//get garden collections
+router.get("/api/gardens/collection", async (req: Request, res: Response) => {
+  try {
+    const pool = await sql.connect(dbConfig);
+    const result = await pool.request().query("SELECT * FROM Gardens");
+    const gardens: any[] = result.recordset;
+
+    let featureCollections = "";
+    gardens.forEach((garden) => {
+      const featureCollection = {
+        type: "FeatureCollection",
+        features: [
+          {
+            type: "Feature",
+            geometry: {
+              type: "Point",
+              coordinates: [garden.Long, garden.Lat],
+            },
+          },
+        ],
+      };
+      featureCollections += JSON.stringify(featureCollection) + ",";
+    });
+    if (featureCollections) {
+      featureCollections = featureCollections.substring(0, featureCollections.length - 1);
+    }
+    res.send(featureCollections);
+  } catch (error) {
+    console.error("Error retrieving garden collection:", error);
+    res.status(500).json({ message: "Error retrieving garden collection" });
+  }
+});
+
 //get garden by id
 router.get("/api/gardens/:id", async (req: Request, res: Response) => {
   const { id } = req.params;
