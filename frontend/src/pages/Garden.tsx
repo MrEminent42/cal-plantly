@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Grid, Paper, Typography, Skeleton, Box, Slider, Button } from '@mui/material';
 import { GardenInfo, getGarden, getGardens, getPlantsInGarden } from '../api/gardens';
 import { Navigate, useNavigate, useParams } from 'react-router-dom';
-import { PlantInfo } from '../api/plants';
+import { PlantInfo, putWaterLevel } from '../api/plants';
 import ShowerIcon from '@mui/icons-material/Shower';
 
 const Garden = () => {
@@ -18,15 +18,13 @@ const Garden = () => {
 
   const plantImages = ["/images/California Poppy.png", "/images/red valerian.png", "/images/violet.png"];
 
-  useEffect(() => {
+  const updatePlants = () => {
     if (!params.id) return;
     // +params.id means convert into a number!? woah
     getGarden(+params.id).then((garden) => {
-      console.log(garden)
       setGarden(garden)
 
       getPlantsInGarden(+params.id!).then((plants) => {
-        console.log(plants)
         setPlants(plants)
       }).catch(error => console.log(error));
 
@@ -34,8 +32,24 @@ const Garden = () => {
       navigate("/game");
       console.log(error)
     })
+  }
+
+  useEffect(() => {
+    updatePlants();
 
   }, [])
+
+  const waterPlants = async () => {
+    // for each plant, water it
+    plants.forEach((plant) => {
+      putWaterLevel(plant.Id, plant.WaterLevel + 10)
+    })
+
+    await new Promise(resolve => setTimeout(resolve, 300));
+    updatePlants();
+
+
+  }
 
   if (params.id === undefined || params.id === null) {
     // redirect to game page
@@ -60,7 +74,9 @@ const Garden = () => {
 
         </Box>
         <Box sx={{ flex: 1, display: 'flex', alignItems: 'flex-end', justifyContent: 'center' }}>
-          <Button sx={{ backgroundColor: '#4287f5', color: 'white', width: "100%", maxWidth: '50vw' }}>
+          <Button sx={{ backgroundColor: '#4287f5', color: 'white', width: "100%", maxWidth: '50vw' }}
+            onClick={() => waterPlants()}
+          >
             <ShowerIcon />
             WATER
           </Button>
