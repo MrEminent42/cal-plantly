@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
-import { Grid, Paper } from '@mui/material';
+import { Grid, Paper, Typography, Skeleton } from '@mui/material';
 import { getGarden, getGardens, getPlantsInGarden } from '../api/gardens';
 import { Navigate, useParams } from 'react-router-dom';
+import { PlantInfo } from '../api/plants';
 
 const Garden = () => {
   const params = useParams();
@@ -11,7 +12,7 @@ const Garden = () => {
     setSelected(index);
   }
   const [garden, setGarden] = useState();
-  const [plants, setPlants] = useState();
+  const [plants, setPlants] = useState<PlantInfo[]>([]);
 
   useEffect(() => {
     if (!params.id) return;
@@ -20,7 +21,7 @@ const Garden = () => {
       console.log(garden)
       setGarden(garden)
 
-      getPlantsInGarden(garden.id).then((plants) => {
+      getPlantsInGarden(+params.id!).then((plants) => {
         console.log(plants)
         setPlants(plants)
       }).catch(error => console.log(error));
@@ -47,15 +48,22 @@ const Garden = () => {
             <Paper
               onClick={() => handleClick(index)}
               sx={{
+                backgroundColor: plants[index] ? '' : 'lightgray',
                 height: 100,
                 cursor: 'pointer',
+                alignItems: 'center'
               }}
+            >
+              <Typography>
+                {plants ? (
 
+                  plants[index] ? plants[index].Description : ""
+                ) : (
+                  <Skeleton variant='text' />
+                )}
+              </Typography>
+            </Paper>
 
-
-
-
-            />
           </Grid>
         ))}
       </Grid>

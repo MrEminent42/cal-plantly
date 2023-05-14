@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { PlantInfo } from './plants';
 
 // api call using axios to get user from database
 
@@ -23,7 +24,7 @@ export const getGardenByName = async (name: string) => {
 }
 
 export const getPlantsInGarden = async (gardenId: number) => {
-    const response = await axios.get(apiURL + '/gardens/' + gardenId + '/plants');
+    const response = await axios.get<PlantInfo[]>(apiURL + '/gardens/' + gardenId + '/plants');
     console.log(response.data);
     return response.data;
 }

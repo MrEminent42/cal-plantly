@@ -22,12 +22,13 @@ export const getPlantSpecies = async (speciesId: number) => {
     return response.data;
 }
 
-export interface Plant {
+export interface PlantInfo {
     Id: number,
     SpeciesId: number,
     Growth: number,
     WaterLevel: number,
-    Lat: number,
-    Long: number,
-    Description: string
+    Description: string,
+    WaterLow: number,
+    WaterHigh: number,
+    LossRate: number,
 }

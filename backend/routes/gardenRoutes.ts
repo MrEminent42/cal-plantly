@@ -68,9 +68,12 @@ router.get("/api/gardens/:id/plants", async (req: Request, res: Response) => {
   try {
     const pool = await sql.connect(dbConfig);
     const result = await pool.request().input("GardenId", sql.Int, id).query(`
-      SELECT Plants.Id, Plants.SpeciesId
+      SELECT Plants.Id, Growth, WaterLevel, 
+      Description, Name, WaterLow, WaterHigh,
+      LossRate
       FROM Plantings
       INNER JOIN Plants ON Plantings.PlantId = Plants.Id
+      INNER JOIN Species ON Plants.SpeciesId = Species.Id
       WHERE Plantings.GardenId = @GardenId
       `);
 
@@ -108,5 +111,5 @@ router.post("/api/gardens", async (req: Request, res: Response) => {
   }
 });
 
-export {};
+export { };
 module.exports = router;
