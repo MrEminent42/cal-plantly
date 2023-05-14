@@ -13,6 +13,9 @@ import {
   IAzureMapOptions,
 } from 'react-azure-maps';
 import { AuthenticationType, data, HtmlMarkerOptions, SymbolLayerOptions } from 'azure-maps-control';
+import Snackbar from '@mui/material/Snackbar';
+import Alert from '@mui/material/Alert';
+
 
 function clusterClicked(e: any) {
   console.log('clusterClicked', e);
@@ -94,6 +97,8 @@ const MarkersExample: React.FC = () => {
   });
 
   const [loading, setLoading] = useState(true);
+  const [userDeniedLocation, setUserDeniedLocation] = useState(false);
+  const [showError, setShowError] = useState(false);
 
   const [point1, setPoint1] = useState(new data.Position(location.longitude, location.latitude));
 
@@ -109,6 +114,9 @@ const MarkersExample: React.FC = () => {
       },
       error => {
         console.error(error);
+        setLoading(false);
+        setUserDeniedLocation(true);
+        setShowError(true);
       }
     );
   }
@@ -294,6 +302,17 @@ const MarkersExample: React.FC = () => {
 
         </div>
       </AzureMapsProvider>
+
+      <Snackbar
+
+        open={showError}
+        autoHideDuration={6000}
+        onClose={() => setShowError(false)}
+      >
+        <Alert onClose={() => setShowError(false)} severity="error" variant="filled" sx={{ width: '100%' }}>
+          We couldn't get your location ☹️
+        </Alert>
+      </Snackbar>
     </>
   );
 };

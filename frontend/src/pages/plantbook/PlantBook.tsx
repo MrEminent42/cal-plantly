@@ -3,7 +3,7 @@ import Grid from '@mui/material/Grid';
 import { Box } from '@mui/system'
 import PlantEntry from '../../components/PlantBook/PlantEntry';
 import "./BookStyle.css";
-import { Navigate, Route, Routes } from 'react-router-dom';
+import { Navigate, Route, Routes, useNavigate } from 'react-router-dom';
 import PoppyPage from './PoppyPage';
 import { useEffect, useState } from 'react'
 import { PlantInfo, getAllPlantSpecies, getPlants } from '../../api/plants';
@@ -14,6 +14,7 @@ import VioletPage from './VioletPage';
 const PlantBook = () => {
 
     const [plants, setPlants] = useState<PlantInfo[]>([]);
+    const navigate = useNavigate();
 
     useEffect(() => {
         getAllPlantSpecies().then((plants) => {
@@ -44,7 +45,9 @@ const PlantBook = () => {
             flexDirection: 'column'
         }}>
 
-            <div className="book-title">Plant Book</div>
+            <div className="book-title"
+                onClick={() => navigate("/game/book")}
+            >Plant Book</div>
 
             <Routes>
                 <Route path="/" element={showMainScreen()} />
