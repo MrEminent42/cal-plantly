@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react';
-import { Grid, Paper, Typography, Skeleton, Box, Slider } from '@mui/material';
+import { Grid, Paper, Typography, Skeleton, Box, Slider, Button } from '@mui/material';
 import { GardenInfo, getGarden, getGardens, getPlantsInGarden } from '../api/gardens';
 import { Navigate, useNavigate, useParams } from 'react-router-dom';
 import { PlantInfo } from '../api/plants';
+import ShowerIcon from '@mui/icons-material/Shower';
 
 const Garden = () => {
   const params = useParams();
@@ -49,8 +50,22 @@ const Garden = () => {
     <Box sx={{
       padding: '10px'
     }}>
-      <Typography variant="h3">Garden</Typography>
-      {garden && <Typography variant="h4">{garden.Name}</Typography>}
+      <Box sx={{
+        display: 'flex',
+        position: 'relative'
+      }}>
+        <Box>
+          <Typography variant="h3">Garden</Typography>
+          {garden && <Typography variant="h4">{garden.Name}</Typography>}
+
+        </Box>
+        <Box sx={{ flex: 1, display: 'flex', alignItems: 'flex-end', justifyContent: 'center' }}>
+          <Button sx={{ backgroundColor: '#4287f5', color: 'white', width: "100%", maxWidth: '50vw' }}>
+            <ShowerIcon />
+            WATER
+          </Button>
+        </Box>
+      </Box>
       <Grid container spacing={2}>
         {Array.from(Array(16)).map((_, index) => (
           <Grid item xs={12} lg={3} key={index}>
