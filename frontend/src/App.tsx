@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import Game from './pages/Game';
-import PlantBook from './pages/PlantBook';
+import PlantBook from './pages/plantbook/PlantBook';
 import { ThemeProvider } from '@mui/material';
 import theme from './config/config.theme';
 

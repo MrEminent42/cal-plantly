@@ -40,15 +40,22 @@ const Login = () => {
 
     const renderSignIn = () => {
         return (
-            <Box sx={{ width: { xs: '100%', md: '600px' } }}>
+            <Box sx={{ width: { xs: '100%', md: '600px' }}}>
                 <Fade in>
                     <Box sx={{
-                        // position: 'absolute',
-                        // bottom: '1rem',
-                        // width: '100%',
+                        position: 'absolute',
+                        top: 0,
+                        bottom: 0,
+
+                        // bottom: '30rem',
+                        // right: '30vw',
+                        // left: '30vw',
                         display: 'flex',
                         justifyContent: 'center',
+                        flexDirection: 'column'
                     }}>
+                        <h1>Cal Plantly</h1>
+
                         <Button onClick={signInWithGoogle} variant="contained" color="secondary" >
                             <GoogleIcon sx={{ mr: '1rem' }} />
                             Sign in with Google

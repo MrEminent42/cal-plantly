@@ -1,16 +1,26 @@
 import styled from '@emotion/styled'
 import { Box } from '@mui/system'
-import "../../pages/BookStyle.css";
+import "../../pages/plantbook/BookStyle.css";
+import { useNavigate } from 'react-router-dom';
 
 
-const PlantEntry = (props:{id:number}) => {
+const PlantEntry = ({ id, name }: { id: number, name: string }) => {
+    const navigate = useNavigate();
+    const FlowerPageMapping = ["poppy", "valerian", "violet"]
     return (
         <HomeDiv style={{
             flexGrow: 1,
-        }}>
-            <div className="book-subtitle">????</div>
+        }}
+            onClick={() => {
+                if (id >= FlowerPageMapping.length) {
+                    return;
+                }
+                navigate(FlowerPageMapping[id]);
+            }}
+        >
+            <div className="book-subtitle">{name}</div>
         </HomeDiv>
-        
+
 
     )
 }

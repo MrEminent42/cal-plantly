@@ -9,7 +9,7 @@ import dbConfig from "../dbConfig";
 router.get('/api/plants', async (req: Request, res: Response) => {
   try {
     const pool = await sql.connect(dbConfig);
-    const result = await pool.request().query('SELECT * FROM Plants');
+    const result = await pool.request().query(`SELECT * FROM Plants`);
     const plants = result.recordset;
     res.json(plants);
   } catch (error) {
@@ -33,6 +33,19 @@ router.get("/api/plants/:id", async (req: Request, res: Response) => {
   } catch (error) {
     console.error('Error retrieving plant:', error);
     res.status(500).json({ message: 'Error retrieving plant' });
+  }
+});
+
+// get all species
+router.get("/api/species", async (req: Request, res: Response) => {
+  try {
+    const pool = await sql.connect(dbConfig);
+    const result = await pool.request().query(`SELECT * FROM Species`);
+    const species = result.recordset;
+    res.json(species);
+  } catch (error) {
+    console.error('Error retrieving species:', error);
+    res.status(500).json({ message: 'Error retrieving species' });
   }
 });
 
@@ -108,5 +121,5 @@ router.put("/api/plants/:id/water-level", async (req: Request, res: Response) =>
 });
 
 
-export {};
+export { };
 module.exports = router;
