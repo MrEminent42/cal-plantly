@@ -16,10 +16,8 @@ import { AuthenticationType, data, HtmlMarkerOptions, SymbolLayerOptions } from 
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
 
+const apiURL = process.env.REACT_APP_PLANTLY_API_URL;
 
-function clusterClicked(e: any) {
-  console.log('clusterClicked', e);
-}
 
 const onClick = (e: any) => {
   console.log('You click on: ', e);
@@ -90,7 +88,8 @@ const markersStandardImages = [
 ];
 
 const rand = () => markersStandardImages[Math.floor(Math.random() * markersStandardImages.length)];
-const MarkersExample: React.FC = () => {
+
+const MarkersExample = () => {
   const [location, setLocation] = useState({
     latitude: 35.3001,
     longitude: -122.9603,
@@ -101,6 +100,12 @@ const MarkersExample: React.FC = () => {
   const [showError, setShowError] = useState(false);
 
   const [point1, setPoint1] = useState(new data.Position(location.longitude, location.latitude));
+
+
+  const handleClickMarker = (e: any) => {
+    console.log('click');
+    console.log(e);
+  }
 
   const updateLocation = () => {
 
@@ -152,23 +157,12 @@ const MarkersExample: React.FC = () => {
   );
 
 
-  // if (loading) {
-  //   return <div>Hang on while we grab your location...</div>
-  // }
-
 
   // bubble: 
 
 
-  function mouseOn(e: any) {
-    e.map.getCanvas().style.cursor = 'pointer';
-  }
-
-  function mouseLeave(e: any) {
-    e.map.getCanvas().style.cursor = '';
-  }
-
   function clusterClicked(e: any) {
+
     if (e && e.shapes && e.shapes.length > 0 && e.shapes[0].properties.cluster) {
       //Get the clustered point from the event.
       const cluster = e.shapes[0];
@@ -221,14 +215,10 @@ const MarkersExample: React.FC = () => {
       <AzureMapsProvider>
         <div style={styles.map}>
           <AzureMap options={option}>
+
+            {/* YOU MARKER */}
             <AzureMapDataSourceProvider
-              events={{
-                dataadded: (e: any) => {
-                  console.log('Data on source added', e);
-                },
-              }}
               id={'markersExample AzureMapDataSourceProvider'}
-              options={{ cluster: true, clusterRadius: 2 }}
             >
               <AzureMapLayerProvider
                 id={'markersExample AzureMapLayerProvider'}
@@ -241,17 +231,15 @@ const MarkersExample: React.FC = () => {
                 type={markersLayer}
               />
               {memoizedMarkerRender}
-              {/* {memoizedHtmlMarkerRender} */}
             </AzureMapDataSourceProvider>
 
 
 
 
-
-
+            {/* CLUSTERING OF GARDEN MARKERS */}
             <AzureMapDataSourceProvider
               id={'BubbleLayer DataSourceProvider'}
-              dataFromUrl="https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_month.geojson"
+              dataFromUrl={apiURL + "/garden_collection/"}
               options={{
                 //Tell the data source to cluster point data.
                 cluster: true,
@@ -269,8 +257,6 @@ const MarkersExample: React.FC = () => {
                 options={bubbleLayerOptions}
                 type="BubbleLayer"
                 events={{
-                  mouseenter: mouseOn,
-                  mouseleave: mouseLeave,
                   click: clusterClicked,
                 }}
               ></AzureMapLayerProvider>
@@ -293,6 +279,9 @@ const MarkersExample: React.FC = () => {
                   filter: ['!', ['has', 'point_count']], //Filter out clustered points from this layer.
                 }}
                 type="SymbolLayer"
+                events={{
+                  click: (e: any) => handleClickMarker(e),
+                }}
               ></AzureMapLayerProvider>
 
             </AzureMapDataSourceProvider>
@@ -303,7 +292,6 @@ const MarkersExample: React.FC = () => {
       </AzureMapsProvider>
 
       <Snackbar
-
         open={showError}
         autoHideDuration={6000}
         onClose={() => setShowError(false)}

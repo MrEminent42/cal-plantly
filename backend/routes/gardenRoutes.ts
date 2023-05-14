@@ -28,21 +28,19 @@ router.get("/api/garden_collection", async (req: Request, res: Response) => {
 
     let featureCollections: Feature[] = [];
     gardens.forEach((garden) => {
-      const featureCollection = {
-        type: "FeatureCollection",
-        features: [
-          {
-            type: "Feature",
-            geometry: {
-              type: "Point",
-              coordinates: [garden.Long, garden.Lat],
-            },
-          },
-        ],
+      const feature = {
+        type: "Feature",
+        geometry: {
+          type: "Point",
+          coordinates: [garden.Long, garden.Lat],
+        },
       };
-      featureCollections.push(featureCollection);
+      featureCollections.push(feature);
     });
-    res.json(featureCollections);
+    res.json({
+      type: 'FeatureCollection',
+      features: featureCollections
+    });
   } catch (error) {
     console.error("Error retrieving garden collection:", error);
     res.status(500).json({ message: "Error retrieving garden collection" });
@@ -146,11 +144,8 @@ module.exports = router;
 
 interface Feature {
   type: string;
-  features: {
+  geometry: {
     type: string;
-    geometry: {
-      type: string;
-      coordinates: number[];
-    }
-  }[];
+    coordinates: number[];
+  }
 } 
