@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import { Grid, Paper, Typography, Skeleton, Box } from '@mui/material';
-import { getGarden, getGardens, getPlantsInGarden } from '../api/gardens';
+import { Grid, Paper, Typography, Skeleton, Box, Slider } from '@mui/material';
+import { GardenInfo, getGarden, getGardens, getPlantsInGarden } from '../api/gardens';
 import { Navigate, useNavigate, useParams } from 'react-router-dom';
 import { PlantInfo } from '../api/plants';
 
@@ -12,7 +12,7 @@ const Garden = () => {
   function handleClick(index: number): void {
     setSelected(index);
   }
-  const [garden, setGarden] = useState();
+  const [garden, setGarden] = useState<GardenInfo | null>(null);
   const [plants, setPlants] = useState<PlantInfo[]>([]);
 
   const plantImages = ["/images/California Poppy.png", "/images/red valerian.png", "/images/violet.png"];
@@ -50,6 +50,7 @@ const Garden = () => {
       padding: '10px'
     }}>
       <Typography variant="h3">Garden</Typography>
+      {garden && <Typography variant="h4">{garden.Name}</Typography>}
       <Grid container spacing={2}>
         {Array.from(Array(16)).map((_, index) => (
           <Grid item xs={12} lg={3} key={index}>
@@ -72,7 +73,8 @@ const Garden = () => {
                   <img src={plantImages[index]} alt="plant" width="80" height="80" />
                 </Box>
 
-                <Box>
+                {/* box for plant name */}
+                <Box sx={{ flex: 1 }}>
 
                   <Typography>
                     {plants[index].Name}
@@ -80,6 +82,25 @@ const Garden = () => {
                   <Typography>
                     {plants[index].Description}
                   </Typography>
+                </Box>
+
+                {/* box for water level */}
+                <Box sx={{
+                  display: 'flex',
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                }}>
+                  <Typography sx={{ textAlign: 'center' }}>
+                    water level:<br />
+                    {plants[index].WaterLevel}
+                  </Typography>
+
+                  <Slider
+                    aria-label="Temperature"
+                    orientation="vertical"
+                    valueLabelDisplay="auto"
+                    value={plants[index].WaterLevel}
+                  />
                 </Box>
               </Box>)}
             </Paper>
