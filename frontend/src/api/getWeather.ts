@@ -1,4 +1,4 @@
-import axios from 'axios'
+import axios from 'axios';
 // import setIcon from ../ components / TopBar / TopBar
 
 export default function fetchWeatherData(apiKey: string, query: string) {
