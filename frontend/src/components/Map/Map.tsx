@@ -15,6 +15,8 @@ import {
 import { AuthenticationType, data, HtmlMarkerOptions, SymbolLayerOptions } from 'azure-maps-control';
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
+import { getGardens } from '../../api/gardens';
+import { useNavigate } from 'react-router-dom';
 
 const apiURL = process.env.REACT_APP_PLANTLY_API_URL;
 
@@ -100,11 +102,25 @@ const MarkersExample = () => {
   const [showError, setShowError] = useState(false);
 
   const [point1, setPoint1] = useState(new data.Position(location.longitude, location.latitude));
+  const navigate = useNavigate();
 
 
   const handleClickMarker = (e: any) => {
     console.log('click');
     console.log(e);
+
+    // search through all the gardens and find the one that matches the coordinates of the marker that was clicked
+    // then navigate to that garden's page
+
+    getGardens().then((gardens) => {
+      console.log(gardens)
+      gardens.forEach((garden) => {
+        console.log(e.shapes[0].data.geometry.coordinates)
+        if (garden.Lat === e.shapes[0].data.geometry.coordinates[1] && garden.Long === e.shapes[0].data.geometry.coordinates[0]) {
+          navigate("/game/garden/" + garden.Id);
+        }
+      })
+    }).catch(error => console.log(error));
   }
 
   const updateLocation = () => {

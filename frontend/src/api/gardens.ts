@@ -6,7 +6,7 @@ import { PlantInfo } from './plants';
 const apiURL = process.env.REACT_APP_PLANTLY_API_URL;
 
 export const getGardens = async () => {
-    const response = await axios.get(apiURL + '/gardens');
+    const response = await axios.get<GardenInfo[]>(apiURL + '/gardens');
     console.log(response.data);
     return response.data;
 }
@@ -27,4 +27,12 @@ export const getPlantsInGarden = async (gardenId: number) => {
     const response = await axios.get<PlantInfo[]>(apiURL + '/gardens/' + gardenId + '/plants');
     console.log(response.data);
     return response.data;
+}
+
+export interface GardenInfo {
+    Id: number,
+    Name: string,
+    Lat: number,
+    Long: number,
+    Radius: number,
 }
