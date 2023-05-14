@@ -45,3 +45,11 @@ export interface PlantInfo {
     LossRate: number,
     Name: string,
 }
+
+export interface SpeciesInfo {
+    Id: number,
+    Name: string,
+    WaterLow: number,
+    WaterHigh: number,
+    LossRate: number,
+}

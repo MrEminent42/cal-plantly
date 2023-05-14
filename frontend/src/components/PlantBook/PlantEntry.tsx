@@ -4,7 +4,7 @@ import "../../pages/plantbook/BookStyle.css";
 import { useNavigate } from 'react-router-dom';
 
 
-const PlantEntry = ({ id, name }: { id: number, name: string }) => {
+const PlantEntry = ({ species, name }: { species: number, name: string }) => {
     const navigate = useNavigate();
     const FlowerPageMapping = ["poppy", "valerian", "violet"]
     return (
@@ -12,10 +12,10 @@ const PlantEntry = ({ id, name }: { id: number, name: string }) => {
             flexGrow: 1,
         }}
             onClick={() => {
-                if (id >= FlowerPageMapping.length) {
+                if (species >= FlowerPageMapping.length) {
                     return;
                 }
-                navigate(FlowerPageMapping[id]);
+                navigate(FlowerPageMapping[species]);
             }}
         >
             <div className="book-subtitle">{name}</div>

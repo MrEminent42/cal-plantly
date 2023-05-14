@@ -136,8 +136,11 @@ const MarkersExample = () => {
           // check proximity is with
           const distance = calculateDistance(garden.Lat, garden.Long, location.latitude, location.longitude);
 
+          //print distance rounded to 2 decimal places
+          console.log(Math.round(distance * 100) / 100);
 
-          if (distance > 0.1) {
+
+          if (distance > 0.15) {
             setShowTooFar(true);
             return;
           }
