@@ -1,24 +1,32 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { styled } from '@mui/system';
 
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import { Button, Typography } from '@mui/material';
 import { getAuth, signOut } from '@firebase/auth';
+import fetchWeatherData from '../../api/getWeather';
 
 const TopBar = () => {
+
+    const [icon, setIcon] = useState();
+
+    async function fetchData() {
+        await fetchWeatherData(process.env.REACT_APP_WEATHER_API_KEY || '', '93410').then((iconData) => {
+            setIcon(iconData);
+        });
+    }
+
+    fetchData();
+
     return (
-        <AppBar position="static"
-            elevation={0}
-            sx={{
-                display: 'flex',
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                background: 'linear-gradient(to bottom, rgb(237, 229, 128), rgba(237, 229, 128, 0.1))',
-                paddingBottom: '10px',
-            }}>
-            <Chip sx={{ flex: 1 }}>
-                Weather
+        <AppBar position="static" sx={{
+            display: 'flex',
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+        }}>
+            <Chip sx={{ backgroundColor: 'red', flex: 1 }}>
+                <img src={`https:${icon}`} alt="icon" />
             </Chip>
             <Chip sx={{ flex: 1 }}>
                 Points

@@ -15,6 +15,9 @@ import { AuthState, currentUserAtom } from './jotai/authAtoms';
 import { BrowserRouter, Routes, Route, Navigate, useNavigate } from "react-router-dom";
 import ProtectedRoute from './components/ProtectedRoute';
 import Login from './pages/Login';
+import TopBar from './components/TopBar/TopBar';
+import ActionButton from './components/ActionButton';
+import Map from './components/Map/Map';
 
 function App() {
     const [currentUser, setCurrentUser] = useAtom(currentUserAtom);

@@ -3,6 +3,7 @@ import React from 'react'
 import { Box } from '@mui/system'
 import ActionButton from '../components/ActionButton'
 import TopBar from '../components/TopBar/TopBar'
+import Map from '../components/Map/Map'
 
 const Home = () => {
     return (
@@ -14,11 +15,11 @@ const Home = () => {
 
             <p>Welcome to Cal Plantly!</p>
 
+            <Map />
 
             <ActionButton />
 
             home screen
-
         </HomeDiv>
     )
 }
