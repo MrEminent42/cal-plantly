@@ -4,6 +4,7 @@ import TopBar from '../components/TopBar/TopBar'
 import Map from '../components/Map/Map'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import PlantInfo from './PlantInfo'
+import PlantBook from './PlantBook'
 
 const Game = () => {
 
@@ -17,6 +18,7 @@ const Game = () => {
             <Routes>
                 <Route path="/" element={<Map />} />
                 <Route path="/plant" element={<PlantInfo />} />
+                <Route path="/book" element={<PlantBook />} />
             </Routes>
 
         </HomeDiv>
