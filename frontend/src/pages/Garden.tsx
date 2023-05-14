@@ -15,7 +15,7 @@ const Garden = () => {
   const [garden, setGarden] = useState();
   const [plants, setPlants] = useState<PlantInfo[]>([]);
 
-  const plantImages = ["/images/California Poppy.png", "/images/red valerian.png", "/images/violet.png"];
+  const plantImages = ["/images/dirtPoppyBloom.png", "/images/dirtValerianBloom.png", "/images/dirtVioletBloom.png"];
 
   useEffect(() => {
     if (!params.id) return;
