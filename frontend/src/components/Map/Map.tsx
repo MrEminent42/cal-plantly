@@ -146,7 +146,7 @@ const MarkersExample: React.FC = () => {
   console.log('MarkerExample RENDER');
 
   if (loading) {
-    return <div>Please wait 30 seconds while we receive your location</div>;
+    return <div>Hang on while we grab your location...</div>
   }
 
 
