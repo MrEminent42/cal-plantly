@@ -1,7 +1,7 @@
 import styled from '@emotion/styled'
 import Grid from '@mui/material/Grid';
 import { Box } from '@mui/system'
-import PlantEntry from '../components/PlantBook/PlantEntry';
+import PlantEntry from '../../components/PlantBook/PlantEntry';
 import "./BookStyle.css";
 import { Navigate, Route, Routes } from 'react-router-dom';
 import PoppyPage from './PoppyPage';

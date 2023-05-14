@@ -13,7 +13,6 @@ import {
   IAzureMapOptions,
 } from 'react-azure-maps';
 import { AuthenticationType, data, HtmlMarkerOptions, SymbolLayerOptions } from 'azure-maps-control';
-import { Button, Chip } from '@mui/material';
 
 function clusterClicked(e: any) {
   console.log('clusterClicked', e);
@@ -134,7 +133,7 @@ const MarkersExample: React.FC = () => {
         subscriptionKey: process.env.REACT_APP_MAP_API_KEY,
       },
       center: [-120.6603, 35.3001], // Cal Poly SLO coordinates
-      zoom: 16, // Zoom level for Cal Poly SLO
+      zoom: 14, // Zoom level for Cal Poly SLO
     };
   }, []);
 

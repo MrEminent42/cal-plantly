@@ -1,16 +1,16 @@
 import styled from '@emotion/styled'
 import { Box } from '@mui/system'
-import "../../pages/BookStyle.css";
+import "../../pages/plantbook/BookStyle.css";
 
 
-const PlantEntry = (props:{id:number}) => {
+const PlantEntry = (props: { id: number }) => {
     return (
         <HomeDiv style={{
             flexGrow: 1,
         }}>
             <div className="book-subtitle">????</div>
         </HomeDiv>
-        
+
 
     )
 }
