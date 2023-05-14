@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 
 const PlantEntry = ({ species, name }: { species: number, name: string }) => {
     const navigate = useNavigate();
-    const FlowerPageMapping = ["poppy", "valerian", "violet"]
+    const FlowerPageMapping = ["", "poppy", "valerian", "violet"]
     return (
         <HomeDiv style={{
             flexGrow: 1,

@@ -137,6 +137,8 @@ const MarkersExample = () => {
           const distance = calculateDistance(garden.Lat, garden.Long, location.latitude, location.longitude);
 
           //print distance rounded to 2 decimal places
+          console.log("your loc " + location.latitude + "lat " + location.longitude + " long")
+          console.log("garden loc " + garden.Lat + " " + garden.Long)
           console.log(Math.round(distance * 100) / 100);
 
 
@@ -158,6 +160,7 @@ const MarkersExample = () => {
       position => {
         const { longitude, latitude } = position.coords;
         setLocation({ latitude, longitude });
+        console.log("we found your location at " + latitude + " " + longitude);
         setPoint1(new data.Position(longitude, latitude));
         setMarkers([new data.Position(longitude, latitude)]); // add point1 to markers array
         setLoading(false);
