@@ -93,30 +93,36 @@ const MarkersExample: React.FC = () => {
     latitude: 35.3001,
     longitude: -122.9603,
   });
-  
+
   const [loading, setLoading] = useState(true);
 
   const [point1, setPoint1] = useState(new data.Position(location.longitude, location.latitude));
-  
+
+  const updateLocation = () => {
+
+    console.log("updating location");
+    navigator.geolocation.getCurrentPosition(
+      position => {
+        const { longitude, latitude } = position.coords;
+        setLocation({ latitude, longitude });
+        setPoint1(new data.Position(longitude, latitude));
+        setMarkers([new data.Position(longitude, latitude)]); // add point1 to markers array
+        setLoading(false);
+      },
+      error => {
+        console.error(error);
+      }
+    );
+  }
+
+
   useEffect(() => {
-    const interval = setInterval(() => {
-      navigator.geolocation.getCurrentPosition(
-        position => {
-          const { longitude, latitude } = position.coords;
-          setLocation({ latitude, longitude });
-          setPoint1(new data.Position(longitude, latitude));
-          setMarkers([new data.Position(longitude, latitude)]); // add point1 to markers array
-          setLoading(false);
-        },
-        error => {
-          console.error(error);
-        }
-      );
-    }, 30000); // call the function every 30 seconds
-  
+    updateLocation();
+    console.log("setting timer");
+    const interval = setInterval(updateLocation, 30000); // call the function every 30 seconds
     return () => clearInterval(interval);
-  }, [location]);
-    
+  }, []);
+
 
 
   const [markers, setMarkers] = useState([point1]);
@@ -125,12 +131,12 @@ const MarkersExample: React.FC = () => {
 
   const option: IAzureMapOptions = useMemo(() => {
     return {
-        authOptions: {
-            authType: AuthenticationType.subscriptionKey,
-            subscriptionKey: process.env.REACT_APP_MAP_API_KEY,
-          },
-          center: [-120.6603, 35.3001], // Cal Poly SLO coordinates
-          zoom: 16, // Zoom level for Cal Poly SLO
+      authOptions: {
+        authType: AuthenticationType.subscriptionKey,
+        subscriptionKey: process.env.REACT_APP_MAP_API_KEY,
+      },
+      center: [-120.6603, 35.3001], // Cal Poly SLO coordinates
+      zoom: 16, // Zoom level for Cal Poly SLO
     };
   }, []);
 
@@ -146,7 +152,7 @@ const MarkersExample: React.FC = () => {
     return <div>Please wait 30 seconds while we receive your location</div>;
   }
 
-return (
+  return (
     <>
       <AzureMapsProvider>
         <div style={styles.map}>
@@ -186,7 +192,7 @@ return (
 
 const styles = {
   map: {
-    flex:1,
+    flex: 1,
   },
   buttonContainer: {
     display: 'grid',
