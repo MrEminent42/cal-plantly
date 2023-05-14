@@ -74,7 +74,9 @@ const Garden = () => {
 
         </Box>
         <Box sx={{ flex: 1, display: 'flex', alignItems: 'flex-end', justifyContent: 'center' }}>
-          <Button sx={{ backgroundColor: '#4287f5', color: 'white', width: "100%", maxWidth: '50vw' }}
+          <Button disableTouchRipple sx={{
+            backgroundColor: '#4287f5', color: 'white', width: "100%", maxWidth: '50vw'
+          }}
             onClick={() => waterPlants()}
           >
             <ShowerIcon />
@@ -139,7 +141,7 @@ const Garden = () => {
           </Grid>
         ))}
       </Grid>
-    </Box>
+    </Box >
   );
 };
 
