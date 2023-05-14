@@ -1,18 +1,19 @@
 import styled from '@emotion/styled'
-import React from 'react'
 import { Box } from '@mui/system'
-import Map from '../components/Map/Map';
-import Location from '../api/getLocation'
-import ActionButton from '../components/ActionButton'; 
+import TopBar from '../components/TopBar/TopBar'
+import Map from '../components/Map/Map'
 
 const Home = () => {
 
     return (
-        <HomeDiv style={{
-            flexGrow: 1,
-            flexDirection: "column",
-        }}>
+
+        <HomeDiv>
+            <Box>
+                <TopBar />
+            </Box>
+
             <Map />
+
         </HomeDiv>
 
     )
@@ -23,4 +24,5 @@ export default Home
 const HomeDiv = styled(Box)(({ theme }) => ({
     display: 'flex',
     flex: 1,
+    flexDirection: 'column'
 }))

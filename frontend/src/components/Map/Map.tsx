@@ -93,30 +93,36 @@ const MarkersExample: React.FC = () => {
     latitude: 35.3001,
     longitude: -122.9603,
   });
-  
+
   const [loading, setLoading] = useState(true);
 
   const [point1, setPoint1] = useState(new data.Position(location.longitude, location.latitude));
-  
+
+  const updateLocation = () => {
+
+    console.log("updating location");
+    navigator.geolocation.getCurrentPosition(
+      position => {
+        const { longitude, latitude } = position.coords;
+        setLocation({ latitude, longitude });
+        setPoint1(new data.Position(longitude, latitude));
+        setMarkers([new data.Position(longitude, latitude)]); // add point1 to markers array
+        setLoading(false);
+      },
+      error => {
+        console.error(error);
+      }
+    );
+  }
+
+
   useEffect(() => {
-    const interval = setInterval(() => {
-      navigator.geolocation.getCurrentPosition(
-        position => {
-          const { longitude, latitude } = position.coords;
-          setLocation({ latitude, longitude });
-          setPoint1(new data.Position(longitude, latitude));
-          setMarkers([new data.Position(longitude, latitude)]); // add point1 to markers array
-          setLoading(false);
-        },
-        error => {
-          console.error(error);
-        }
-      );
-    }, 30000); // call the function every 30 seconds
-  
+    updateLocation();
+    console.log("setting timer");
+    const interval = setInterval(updateLocation, 30000); // call the function every 30 seconds
     return () => clearInterval(interval);
-  }, [location]);
-    
+  }, []);
+
 
 
   const [markers, setMarkers] = useState([point1]);
@@ -125,12 +131,12 @@ const MarkersExample: React.FC = () => {
 
   const option: IAzureMapOptions = useMemo(() => {
     return {
-        authOptions: {
-            authType: AuthenticationType.subscriptionKey,
-            subscriptionKey: process.env.REACT_APP_MAP_API_KEY,
-          },
-          center: [-120.6603, 35.3001], // Cal Poly SLO coordinates
-          zoom: 16, // Zoom level for Cal Poly SLO
+      authOptions: {
+        authType: AuthenticationType.subscriptionKey,
+        subscriptionKey: process.env.REACT_APP_MAP_API_KEY,
+      },
+      center: [-120.6603, 35.3001], // Cal Poly SLO coordinates
+      zoom: 16, // Zoom level for Cal Poly SLO
     };
   }, []);
 
@@ -147,24 +153,22 @@ const MarkersExample: React.FC = () => {
   }
 
 
-
-
   // bubble: 
 
 
   function mouseOn(e: any) {
     e.map.getCanvas().style.cursor = 'pointer';
   }
-  
+
   function mouseLeave(e: any) {
     e.map.getCanvas().style.cursor = '';
   }
-  
+
   function clusterClicked(e: any) {
     if (e && e.shapes && e.shapes.length > 0 && e.shapes[0].properties.cluster) {
       //Get the clustered point from the event.
       const cluster = e.shapes[0];
-  
+
       //Get the cluster expansion zoom level. This is the zoom level at which the cluster starts to break apart.
       e.map.sources
         .getById('BubbleLayer DataSourceProvider')
@@ -180,8 +184,8 @@ const MarkersExample: React.FC = () => {
         });
     }
   }
-  
-  
+
+
   const bubbleLayerOptions = {
     //Scale the size of the clustered bubble based on the number of points inthe cluster.
     radius: [
@@ -193,7 +197,7 @@ const MarkersExample: React.FC = () => {
       750,
       40, //If point_count >= 750, radius is 40 pixels.
     ],
-  
+
     //Change the color of the cluster based on the value on the point_cluster property of the cluster.
     color: [
       'step',
@@ -208,7 +212,7 @@ const MarkersExample: React.FC = () => {
     filter: ['has', 'point_count'], //Only rendered data points which have a point_count property, which clusters do.
   };
 
-return (
+  return (
     <>
       <AzureMapsProvider>
         <div style={styles.map}>
@@ -239,58 +243,58 @@ return (
               {memoizedMarkerRender}
               {/* {memoizedHtmlMarkerRender} */}
             </AzureMapDataSourceProvider>
-              
-              
-              
-              
-              
-              
-              <AzureMapDataSourceProvider
-            id={'BubbleLayer DataSourceProvider'}
-            dataFromUrl="https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_month.geojson"
-            options={{
-              //Tell the data source to cluster point data.
-              cluster: true,
 
-              //The radius in pixels to cluster points together.
-              clusterRadius: 100,
 
-              //The maximium zoom level in which clustering occurs.
-              //If you zoom in more than this, all points are rendered as symbols.
-              clusterMaxZoom: 15,
-            }}
-          >
+
+
+
+
+            <AzureMapDataSourceProvider
+              id={'BubbleLayer DataSourceProvider'}
+              dataFromUrl="https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_month.geojson"
+              options={{
+                //Tell the data source to cluster point data.
+                cluster: true,
+
+                //The radius in pixels to cluster points together.
+                clusterRadius: 100,
+
+                //The maximium zoom level in which clustering occurs.
+                //If you zoom in more than this, all points are rendered as symbols.
+                clusterMaxZoom: 15,
+              }}
+            >
               <AzureMapLayerProvider
-              id={'BubbleLayer LayerProvider'}
-              options={bubbleLayerOptions}
-              type="BubbleLayer"
-              events={{
-                mouseenter: mouseOn,
-                mouseleave: mouseLeave,
-                click: clusterClicked,
-              }}
-            ></AzureMapLayerProvider>
-            <AzureMapLayerProvider
-              id={'BubbleLayer2 LayerProvider'}
-              options={{
-                iconOptions: {
-                  image: 'none', //Hide the icon image.
-                },
-                textOptions: {
-                  textField: ['get', 'point_count_abbreviated'],
-                  offset: [0, 0.4],
-                },
-              }}
-              type="SymbolLayer"
-            ></AzureMapLayerProvider>
-            <AzureMapLayerProvider
-              id={'BubbleLayer3 LayerProvider'}
-              options={{
-                filter: ['!', ['has', 'point_count']], //Filter out clustered points from this layer.
-              }}
-              type="SymbolLayer"
-            ></AzureMapLayerProvider>
-            
+                id={'BubbleLayer LayerProvider'}
+                options={bubbleLayerOptions}
+                type="BubbleLayer"
+                events={{
+                  mouseenter: mouseOn,
+                  mouseleave: mouseLeave,
+                  click: clusterClicked,
+                }}
+              ></AzureMapLayerProvider>
+              <AzureMapLayerProvider
+                id={'BubbleLayer2 LayerProvider'}
+                options={{
+                  iconOptions: {
+                    image: 'none', //Hide the icon image.
+                  },
+                  textOptions: {
+                    textField: ['get', 'point_count_abbreviated'],
+                    offset: [0, 0.4],
+                  },
+                }}
+                type="SymbolLayer"
+              ></AzureMapLayerProvider>
+              <AzureMapLayerProvider
+                id={'BubbleLayer3 LayerProvider'}
+                options={{
+                  filter: ['!', ['has', 'point_count']], //Filter out clustered points from this layer.
+                }}
+                type="SymbolLayer"
+              ></AzureMapLayerProvider>
+
             </AzureMapDataSourceProvider>
           </AzureMap>
 
@@ -303,7 +307,7 @@ return (
 
 const styles = {
   map: {
-    flex:1,
+    flex: 1,
   },
   buttonContainer: {
     display: 'grid',

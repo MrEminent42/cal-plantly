@@ -17,10 +17,12 @@ const ActionButton = () => {
     var thing = process.env.REACT_APP_HELLO;
 
     return (
-        <Box>
+        <Box
+            sx={{
+                position: 'absolute', right: '10px', top: '45px',
+            }}
+        >
             <Box sx={{
-                borderColor: 'red',
-                borderWidth: 5,
                 // backgroundColor: 'aqua',
                 display: 'flex',
                 flexDirection: 'column',
@@ -43,7 +45,7 @@ const ActionButton = () => {
                 borderWidth: 5,
                 // backgroundColor: 'aqua',
                 display: 'flex',
-                flexDirection: 'row',
+                flexDirection: 'column',
                 alignItems: 'center',
                 gap: '10px',
             }}>

@@ -3,15 +3,17 @@ import { styled } from '@mui/system';
 
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
+import { Button, Typography } from '@mui/material';
+import { getAuth, signOut } from '@firebase/auth';
 import fetchWeatherData from '../../api/getWeather';
 
-import ActionButton from '../ActionButton'; 
+import ActionButton from './ActionButton';
 
 const TopBar = () => {
 
     const [icon, setIcon] = useState();
 
-    async function fetchData(){
+    async function fetchData() {
         await fetchWeatherData(process.env.REACT_APP_WEATHER_API_KEY || '', '93410').then((iconData) => {
             setIcon(iconData);
         });
@@ -20,31 +22,52 @@ const TopBar = () => {
     fetchData();
 
     return (
-        <AppBar position="static" sx={{
+        <AppBar sx={{
+            position: 'relative',
             display: 'flex',
             flexDirection: 'row',
             justifyContent: 'center',
-             alignItems: 'center',
-            overflow: 'visible'
+            alignItems: 'center',
+            overflow: 'visible',
+            height: '75px',
         }}>
-            <Chip sx={{ flex: 1 }}>
-                <ActionButton/>
-            </Chip>
-            <Chip sx={{ position:'absolute' }}>
-                <h1>Cal Plantly</h1>
-            </Chip>
+            <ActionButton />
+            <SideChip>
+                <img src={`https:${icon}`} alt="icon" />
+            </SideChip>
             <Chip>
-            <img src={`https:${icon}`} alt="icon" />
+                <Typography
+                    sx={{ textAlign: 'center', fontSize: '2.3rem' }}
+                >
+                    Cal Plantly
+                </Typography>
             </Chip>
+            <SideChip>
+                <Button
+                    color="secondary"
+                    onClick={() => signOut(getAuth())}
+                >
+                    LOG OUT
+                </Button>
+            </SideChip>
         </AppBar >
     )
 }
 
 export default TopBar
 
-const Chip = styled(`div`)`
-    background-color: transparent;
-    border-radius: 10px;
-    padding: 10px;
-    margin: 10px;
-`
+const Chip = styled(Box)(() => ({
+    backgroundColor: 'transparent',
+    borderRadius: '10px',
+    margin: '10px',
+    flex: 1,
+}))
+
+const SideChip = styled(Box)(() => ({
+    backgroundColor: 'transparent',
+    borderRadius: '10px',
+    margin: '10px',
+    flex: .1,
+    textAlign: 'center',
+}))
+
