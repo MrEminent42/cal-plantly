@@ -30,6 +30,24 @@ const gardens: Garden[] = [
     longitude: 32.444,
     radius: 10,
   },
+  {
+    id: 2,
+    name: "Agriculture",
+    plants: [
+      {
+        id: 3,
+        name: "Cactus",
+        state: "Healthy",
+        latitude: 123.456,
+        longitude: 789.012,
+        description: "A spiky desert plant.",
+      },
+    ],
+    latitude: 35.302421,
+    longitude: -120.661299,
+    radius: 10,
+
+  }
 ];
 
 //get all gardens
