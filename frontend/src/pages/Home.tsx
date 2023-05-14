@@ -4,8 +4,10 @@ import { Box } from '@mui/system'
 import ActionButton from '../components/ActionButton'
 import TopBar from '../components/TopBar/TopBar'
 import Map from '../components/Map/Map'
+import Location from '../api/getLocation'
 
 const Home = () => {
+
     return (
 
         <HomeDiv>
@@ -21,6 +23,7 @@ const Home = () => {
 
             home screen
         </HomeDiv>
+
     )
 }
 
