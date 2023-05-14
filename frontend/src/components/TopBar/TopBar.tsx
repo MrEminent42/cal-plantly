@@ -52,6 +52,7 @@ const TopBar = () => {
                 <Button
                     color="secondary"
                     onClick={() => signOut(getAuth())}
+                    sx={{ marginBottom: 3 }}
                 >
                     LOG OUT
                 </Button>

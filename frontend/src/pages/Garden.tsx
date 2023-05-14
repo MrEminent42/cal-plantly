@@ -1,11 +1,12 @@
 import { useState, useEffect } from 'react';
-import { Grid, Paper, Typography, Skeleton } from '@mui/material';
+import { Grid, Paper, Typography, Skeleton, Box } from '@mui/material';
 import { getGarden, getGardens, getPlantsInGarden } from '../api/gardens';
-import { Navigate, useParams } from 'react-router-dom';
+import { Navigate, useNavigate, useParams } from 'react-router-dom';
 import { PlantInfo } from '../api/plants';
 
 const Garden = () => {
   const params = useParams();
+  const navigate = useNavigate();
   const [selected, setSelected] = useState<number | null>(null);
 
   function handleClick(index: number): void {
@@ -13,6 +14,8 @@ const Garden = () => {
   }
   const [garden, setGarden] = useState();
   const [plants, setPlants] = useState<PlantInfo[]>([]);
+
+  const plantImages = ["/images/California Poppy.png", "/images/red valerian.png", "/images/violet.png"];
 
   useEffect(() => {
     if (!params.id) return;
@@ -26,7 +29,10 @@ const Garden = () => {
         setPlants(plants)
       }).catch(error => console.log(error));
 
-    }).catch(error => console.log(error))
+    }).catch(error => {
+      navigate("/game");
+      console.log(error)
+    })
 
   }, [])
 
@@ -40,11 +46,13 @@ const Garden = () => {
 
 
   return (
-    <main>
-      <h1>Garden</h1>
+    <Box sx={{
+      padding: '10px'
+    }}>
+      <Typography variant="h3">Garden</Typography>
       <Grid container spacing={2}>
         {Array.from(Array(16)).map((_, index) => (
-          <Grid item xs={3} key={index}>
+          <Grid item xs={12} lg={3} key={index}>
             <Paper
               onClick={() => handleClick(index)}
               sx={{
@@ -54,20 +62,32 @@ const Garden = () => {
                 alignItems: 'center'
               }}
             >
-              <Typography>
-                {plants ? (
+              {plants[index] && (<Box
+                sx={{
+                  padding: '10px',
+                  display: 'flex',
+                }}
+              >
+                <Box >
+                  <img src={plantImages[index]} alt="plant" width="80" height="80" />
+                </Box>
 
-                  plants[index] ? plants[index].Description : ""
-                ) : (
-                  <Skeleton variant='text' />
-                )}
-              </Typography>
+                <Box>
+
+                  <Typography>
+                    {plants[index].Name}
+                  </Typography>
+                  <Typography>
+                    {plants[index].Description}
+                  </Typography>
+                </Box>
+              </Box>)}
             </Paper>
 
           </Grid>
         ))}
       </Grid>
-    </main>
+    </Box>
   );
 };
 

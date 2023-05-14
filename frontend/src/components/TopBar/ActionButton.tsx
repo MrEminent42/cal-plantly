@@ -14,14 +14,12 @@ import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
 import { useNavigate } from 'react-router-dom';
 
 const ActionButton = () => {
-    const [menuOpen, setMenuOpen] = useState(false);
-    var thing = process.env.REACT_APP_HELLO;
     const navigate = useNavigate();
 
     return (
         <Box
             sx={{
-                position: 'absolute', right: '10px', top: '45px',
+                position: 'absolute', right: '15px', top: '45px',
             }}
         >
             <Box sx={{

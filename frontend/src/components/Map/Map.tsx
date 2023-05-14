@@ -151,11 +151,10 @@ const MarkersExample: React.FC = () => {
     [markers],
   );
 
-  console.log('MarkerExample RENDER');
 
-  if (loading) {
-    return <div>Hang on while we grab your location...</div>
-  }
+  // if (loading) {
+  //   return <div>Hang on while we grab your location...</div>
+  // }
 
 
   // bubble: 
@@ -309,7 +308,7 @@ const MarkersExample: React.FC = () => {
         autoHideDuration={6000}
         onClose={() => setShowError(false)}
       >
-        <Alert onClose={() => setShowError(false)} severity="error" variant="filled" sx={{ width: '100%' }}>
+        <Alert onClose={() => setShowError(false)} severity="error" variant="filled" sx={{ width: '100%', fontFamily: 'Arial' }}>
           We couldn't get your location ☹️
         </Alert>
       </Snackbar>
