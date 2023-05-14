@@ -22,12 +22,12 @@ router.get('/', (req: Request, res: Response) => {
     res.send('Welcome to the Cal-Plantly API!');
   });
 
-// Route: Get all plants
+//get all plants
 router.get('/api/plants', (req: Request, res: Response) => {
   res.json(plants);
 });
 
-// Route: Get plant by ID
+//get plant by ID
 router.get('/api/plants/:id', (req: Request, res: Response) => {
   const { id } = req.params;
   const plant = plants.find((p) => p.id === parseInt(id, 10));
@@ -39,7 +39,7 @@ router.get('/api/plants/:id', (req: Request, res: Response) => {
   }
 });
 
-// Route: Get plant by name
+//get plant by name
 router.get('/api/plants/name/:name', (req: Request, res: Response) => {
   const { name } = req.params;
   const plant = plants.find((p) => p.name === name);
