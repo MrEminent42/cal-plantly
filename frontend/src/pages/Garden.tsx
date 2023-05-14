@@ -103,7 +103,7 @@ const Garden = () => {
                 }}
               >
                 <Box >
-                  <img src={plantImages[index]} alt="plant" width="80" height="80" />
+                  <img src={plantImages[plants[index].SpeciesId]} alt="plant" width="80" height="80" />
                 </Box>
 
                 {/* box for plant name */}

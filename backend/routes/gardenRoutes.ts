@@ -99,7 +99,7 @@ router.get("/api/gardens/:id/plants", async (req: Request, res: Response) => {
     const result = await pool.request().input("GardenId", sql.Int, id).query(`
       SELECT Plants.Id, Growth, WaterLevel, 
       Description, Name, WaterLow, WaterHigh,
-      LossRate
+      LossRate, SpeciesId
       FROM Plantings
       INNER JOIN Plants ON Plantings.PlantId = Plants.Id
       INNER JOIN Species ON Plants.SpeciesId = Species.Id
