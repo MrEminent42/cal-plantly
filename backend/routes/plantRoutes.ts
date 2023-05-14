@@ -120,6 +120,25 @@ router.put("/api/plants/:id/water-level", async (req: Request, res: Response) =>
   }
 });
 
+// update all water levels by adding a value
+router.put("/api/plants/water-level/add/:value", async (req: Request, res: Response) => {
+  try {
+    const { value } = req.params;
+    if (!value) {
+      return res.status(400).json({ message: "Incomplete data" });
+    }
+    const pool = await sql.connect(dbConfig);
+    await pool
+      .request()
+      .input("Value", sql.Int, value)
+      .query("UPDATE Plants SET WaterLevel = WaterLevel + @Value");
+
+    res.status(200).json({ message: "Water levels updated successfully" });
+  } catch (error) {
+    console.error("Error updating water levels:", error);
+    res.status(500).json({ message: "Error updating water levels" });
+  }
+});
 
 export { };
 module.exports = router;
