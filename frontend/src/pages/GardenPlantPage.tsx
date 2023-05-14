@@ -1,19 +1,21 @@
 import styled from '@emotion/styled'
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Box } from '@mui/system'
 import { useParams } from 'react-router-dom'
-import { getPlants } from '../api/plants'
+import { PlantInfo as GardenPlantPage, getPlant, getPlants } from '../api/plants'
 
-const PlantInfo = () => {
+const GardenPlantPage = () => {
     const params = useParams();
     // if id is undefined or invalid, redirect to plant book
 
-    const [plants, setPlants] = React.useState([]);
+    const [plants, setPlants] = useState<GardenPlantPage | null>(null);
 
     useEffect(() => {
-        getPlants().then((plants) => {
-            console.log(plants)
-            setPlants(plants)
+        if (params.id === undefined || params.id === null) return;
+        // +params.id turns it into number
+        getPlant(+params.id).then((plant) => {
+            console.log(plant)
+            setPlants(plant)
         }).catch(error => console.log)
 
     }, [])
@@ -31,7 +33,7 @@ const PlantInfo = () => {
     )
 }
 
-export default PlantInfo
+export default GardenPlantPage
 
 const FillDiv = styled(Box)(() => ({
     display: 'flex',
