@@ -22,6 +22,12 @@ export const getPlantSpecies = async (speciesId: number) => {
     return response.data;
 }
 
+export const getAllPlantSpecies = async () => {
+    const response = await axios.get(apiURL + '/species');
+    console.log(response.data);
+    return response.data;
+}
+
 export interface PlantInfo {
     Id: number,
     SpeciesId: number,
@@ -31,4 +37,5 @@ export interface PlantInfo {
     WaterLow: number,
     WaterHigh: number,
     LossRate: number,
+    Name: string,
 }

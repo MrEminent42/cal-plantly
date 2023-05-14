@@ -5,17 +5,32 @@ import PlantEntry from '../../components/PlantBook/PlantEntry';
 import "./BookStyle.css";
 import { Navigate, Route, Routes } from 'react-router-dom';
 import PoppyPage from './PoppyPage';
+import { useEffect, useState } from 'react'
+import { PlantInfo, getAllPlantSpecies, getPlants } from '../../api/plants';
+import PlantPage from './PlantPage';
+import VioletPage from './VioletPage';
 
 
 const PlantBook = () => {
+
+    const [plants, setPlants] = useState<PlantInfo[]>([]);
+
+    useEffect(() => {
+        getAllPlantSpecies().then((plants) => {
+            console.log(plants)
+            setPlants(plants)
+        }).catch(error => console.log)
+
+    }, []);
+
 
     const showMainScreen = () => {
         return (
             <div className='main-box'>
                 <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }}>
-                    {Array.from(Array(3)).map((_, index) => (
+                    {plants.map((plant, index) => (
                         <Grid item xs={2} sm={4} md={4} key={index}>
-                            <PlantEntry id={index}></PlantEntry>
+                            <PlantEntry id={index} name={plant.Name}></PlantEntry>
                         </Grid>
                     ))}
                 </Grid>
@@ -34,6 +49,8 @@ const PlantBook = () => {
             <Routes>
                 <Route path="/" element={showMainScreen()} />
                 <Route path="/poppy" element={<PoppyPage />} />
+                <Route path="/valerian" element={<PlantPage />} />
+                <Route path="/violet" element={<VioletPage />} />
                 <Route
                     path="*"
                     element={<Navigate to="/game/book" replace />}
