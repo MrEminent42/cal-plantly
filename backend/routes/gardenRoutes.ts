@@ -4,6 +4,7 @@ const express = require("express");
 const router = express.Router();
 const sql = require("mssql");
 import dbConfig from "../dbConfig";
+import { type } from "os";
 
 //get all gardens
 router.get("/api/gardens", async (req: Request, res: Response) => {
@@ -19,13 +20,13 @@ router.get("/api/gardens", async (req: Request, res: Response) => {
 });
 
 //get garden collections
-router.get("/api/gardens/collection", async (req: Request, res: Response) => {
+router.get("/api/garden_collection", async (req: Request, res: Response) => {
   try {
     const pool = await sql.connect(dbConfig);
     const result = await pool.request().query("SELECT * FROM Gardens");
     const gardens: any[] = result.recordset;
 
-    let featureCollections = "";
+    let featureCollections: Feature[] = [];
     gardens.forEach((garden) => {
       const featureCollection = {
         type: "FeatureCollection",
@@ -39,12 +40,9 @@ router.get("/api/gardens/collection", async (req: Request, res: Response) => {
           },
         ],
       };
-      featureCollections += JSON.stringify(featureCollection) + ",";
+      featureCollections.push(featureCollection);
     });
-    if (featureCollections) {
-      featureCollections = featureCollections.substring(0, featureCollections.length - 1);
-    }
-    res.send(featureCollections);
+    res.json(featureCollections);
   } catch (error) {
     console.error("Error retrieving garden collection:", error);
     res.status(500).json({ message: "Error retrieving garden collection" });
@@ -141,5 +139,15 @@ router.post("/api/gardens", async (req: Request, res: Response) => {
   }
 });
 
-export {};
 module.exports = router;
+
+interface Feature {
+  type: string;
+  features: {
+    type: string;
+    geometry: {
+      type: string;
+      coordinates: number[];
+    }
+  }[];
+} 
