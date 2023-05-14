@@ -66,7 +66,6 @@ function App() {
         <BrowserRouter>
           <Routes>
             <Route path="/game/*" element={<ProtectedRoute><Game /></ProtectedRoute>} />
-            <Route path="/plantbook" element={<ProtectedRoute><PlantBook /></ProtectedRoute>} />
             <Route path="/login" element={<Login />} />
             <Route
               path="*"

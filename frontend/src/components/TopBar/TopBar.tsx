@@ -23,7 +23,6 @@ const TopBar = () => {
 
     fetchData();
 
-    console.log(icon);
 
     return (
         <AppBar sx={{

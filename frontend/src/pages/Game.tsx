@@ -2,7 +2,7 @@ import styled from '@emotion/styled'
 import { Box } from '@mui/system'
 import TopBar from '../components/TopBar/TopBar'
 import Map from '../components/Map/Map'
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
 import PlantInfo from './PlantInfo'
 import PlantBook from './PlantBook'
 import Plot from './Plot'
@@ -18,9 +18,17 @@ const Game = () => {
 
             <Routes>
                 <Route path="/" element={<Map />} />
-                <Route path="/plant" element={<PlantInfo />} />
-                <Route path="/book" element={<PlantBook />} />
+
+
                 <Route path="/plot" element={<Plot />} />
+
+                <Route path="/plant/:id" element={<PlantInfo />} />
+                <Route path="/book/*" element={<PlantBook />} />
+                <Route
+                    path="/plant"
+                    element={<Navigate to="/game" replace />}
+                />
+
             </Routes>
 
         </HomeDiv>

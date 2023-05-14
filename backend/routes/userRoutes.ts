@@ -2,6 +2,8 @@ import { Request, Response } from "express";
 import User from "../schemas/user";
 const express = require("express");
 const router = express.Router();
+const sql = require("mssql");
+const dbConfig = require("../dbConfig");
 
 //temporary array of user objects
 const users: User[] = [
