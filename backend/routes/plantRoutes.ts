@@ -16,6 +16,12 @@ const plants = [
     latitude: 456.789,
     longitude: 901.234,
   },
+  {
+    id: 3,
+    name: 'Musty',
+    latitude: 423.322,
+    longitude: 421.886,
+  },
 ];
 
 router.get('/', (req: Request, res: Response) => {
