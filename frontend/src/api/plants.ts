@@ -28,6 +28,12 @@ export const getAllPlantSpecies = async () => {
     return response.data;
 }
 
+export const putWaterLevel = async (id: number, waterLevel: number) => {
+    const response = await axios.put(apiURL + '/plants/' + id + '/water-level', { waterLevel: waterLevel });
+    console.log(response.data);
+    return response.data;
+}
+
 export interface PlantInfo {
     Id: number,
     SpeciesId: number,

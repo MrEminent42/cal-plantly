@@ -59,22 +59,8 @@ const renderPoint = (coordinates: data.Position): IAzureMapFeature => {
   );
 };
 
-function renderHTMLPoint(coordinates: data.Position): any {
-  const rendId = Math.random();
-  return (
-    <AzureMapHtmlMarker
-      key={rendId}
-      markerContent={<div className="pulseIcon"></div>}
-      options={{ ...azureHtmlMapMarkerOptions(coordinates) } as any}
-      events={eventToMarker}
-    />
-  );
-}
 
-const colorValue = () =>
-  '#000000'.replace(/0/g, function () {
-    return (~~(Math.random() * 16)).toString(16);
-  });
+
 const markersStandardImages = [
   `marker-black`,
   `marker-blue`,
@@ -89,7 +75,6 @@ const markersStandardImages = [
   `pin-round-red`,
 ];
 
-const rand = () => markersStandardImages[Math.floor(Math.random() * markersStandardImages.length)];
 
 const MarkersExample = () => {
   const [location, setLocation] = useState({
@@ -100,23 +85,64 @@ const MarkersExample = () => {
   const [loading, setLoading] = useState(true);
   const [userDeniedLocation, setUserDeniedLocation] = useState(false);
   const [showError, setShowError] = useState(false);
+  const [showTooFar, setShowTooFar] = useState(false);
 
   const [point1, setPoint1] = useState(new data.Position(location.longitude, location.latitude));
   const navigate = useNavigate();
 
+  // calc long/lat distance
+  // Function to calculate the distance between two points using the Haversine formula
+  function calculateDistance(lat1: number, lon1: number, lat2: number, lon2: number) {
+    const earthRadius = 6371; // Radius of the Earth in kilometers
+
+    // Convert latitude and longitude to radians
+    const lat1Rad = degToRad(lat1);
+    const lon1Rad = degToRad(lon1);
+    const lat2Rad = degToRad(lat2);
+    const lon2Rad = degToRad(lon2);
+
+    // Calculate the differences between the latitudes and longitudes
+    const latDiff = lat2Rad - lat1Rad;
+    const lonDiff = lon2Rad - lon1Rad;
+
+    // Calculate the distance using the Haversine formula
+    const a =
+      Math.sin(latDiff / 2) ** 2 +
+      Math.cos(lat1Rad) *
+      Math.cos(lat2Rad) *
+      Math.sin(lonDiff / 2) ** 2;
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    const distance = earthRadius * c;
+
+    return distance;
+  }
+
+  // Function to convert degrees to radians
+  function degToRad(degrees: number) {
+    return (degrees * Math.PI) / 180;
+  }
+
+
+
 
   const handleClickMarker = (e: any) => {
-    console.log('click');
-    console.log(e);
 
     // search through all the gardens and find the one that matches the coordinates of the marker that was clicked
     // then navigate to that garden's page
 
     getGardens().then((gardens) => {
-      console.log(gardens)
       gardens.forEach((garden) => {
-        console.log(e.shapes[0].data.geometry.coordinates)
         if (garden.Lat === e.shapes[0].data.geometry.coordinates[1] && garden.Long === e.shapes[0].data.geometry.coordinates[0]) {
+          // check proximity is with
+          const distance = calculateDistance(garden.Lat, garden.Long, location.latitude, location.longitude);
+
+
+          if (distance > 0.1) {
+            setShowTooFar(true);
+            return;
+          }
+
+
           navigate("/game/garden/" + garden.Id);
         }
       })
@@ -261,7 +287,7 @@ const MarkersExample = () => {
                 cluster: true,
 
                 //The radius in pixels to cluster points together.
-                clusterRadius: 100,
+                clusterRadius: 20,
 
                 //The maximium zoom level in which clustering occurs.
                 //If you zoom in more than this, all points are rendered as symbols.
@@ -314,6 +340,16 @@ const MarkersExample = () => {
       >
         <Alert onClose={() => setShowError(false)} severity="error" variant="filled" sx={{ width: '100%', fontFamily: 'Arial' }}>
           We couldn't get your location ☹️
+        </Alert>
+      </Snackbar>
+
+      <Snackbar
+        open={showTooFar}
+        autoHideDuration={6000}
+        onClose={() => setShowTooFar(false)}
+      >
+        <Alert onClose={() => setShowError(false)} severity="error" variant="filled" sx={{ width: '100%', fontFamily: 'Arial' }}>
+          That garden is too far away!
         </Alert>
       </Snackbar>
     </>
