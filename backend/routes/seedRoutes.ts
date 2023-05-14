@@ -48,5 +48,24 @@ router.get('/api/seeds/name/:name', (req: Request, res: Response) => {
   }
 });
 
+//create a new seed
+router.post('/api/seeds', (req: Request, res: Response) => {
+    const { id, name, type, amount, owner } = req.body;
+  
+    // Validate the request data
+    if (!id || !name || !type || !amount || !owner) {
+      return res.status(400).json({ message: 'Incomplete data' });
+    }
+  
+    // Create a new seed object
+    const newSeed: Seed = { id, name, type, amount, owner };
+  
+    // Add the new seed to the seeds array
+    seeds.push(newSeed);
+  
+    // Return the newly created seed
+    res.status(201).json(newSeed);
+  });
+
 export {};
 module.exports = router;
