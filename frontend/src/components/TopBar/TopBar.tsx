@@ -7,6 +7,8 @@ import { Button, Typography } from '@mui/material';
 import { getAuth, signOut } from '@firebase/auth';
 import fetchWeatherData from '../../api/getWeather';
 
+import ActionButton from './ActionButton';
+
 const TopBar = () => {
 
     const [icon, setIcon] = useState();
@@ -20,36 +22,52 @@ const TopBar = () => {
     fetchData();
 
     return (
-        <AppBar position="static" sx={{
+        <AppBar sx={{
+            position: 'relative',
             display: 'flex',
             flexDirection: 'row',
-            justifyContent: 'space-between',
+            justifyContent: 'center',
+            alignItems: 'center',
+            overflow: 'visible',
+            height: '75px',
         }}>
-            <Chip sx={{ backgroundColor: 'red', flex: 1 }}>
+            <ActionButton />
+            <SideChip>
                 <img src={`https:${icon}`} alt="icon" />
+            </SideChip>
+            <Chip>
+                <Typography
+                    sx={{ textAlign: 'center', fontSize: '2.3rem' }}
+                >
+                    Cal Plantly
+                </Typography>
             </Chip>
-            <Chip sx={{ flex: 1 }}>
-                Points
-            </Chip>
-            <Chip sx={{ flex: 1 }}>
-                hi
-            </Chip>
-            <Chip sx={{ flex: 1 }}>
+            <SideChip>
                 <Button
+                    color="secondary"
                     onClick={() => signOut(getAuth())}
                 >
                     LOG OUT
                 </Button>
-            </Chip>
+            </SideChip>
         </AppBar >
     )
 }
 
 export default TopBar
 
-const Chip = styled(Typography)`
-    background-color: #a4af69;
-    border-radius: 10px;
-    padding: 10px;
-    margin: 10px;
-`
+const Chip = styled(Box)(() => ({
+    backgroundColor: 'transparent',
+    borderRadius: '10px',
+    margin: '10px',
+    flex: 1,
+}))
+
+const SideChip = styled(Box)(() => ({
+    backgroundColor: 'transparent',
+    borderRadius: '10px',
+    margin: '10px',
+    flex: .1,
+    textAlign: 'center',
+}))
+

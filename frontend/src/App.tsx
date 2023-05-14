@@ -16,8 +16,9 @@ import { BrowserRouter, Routes, Route, Navigate, useNavigate } from "react-route
 import ProtectedRoute from './components/ProtectedRoute';
 import Login from './pages/Login';
 import TopBar from './components/TopBar/TopBar';
-import ActionButton from './components/ActionButton';
 import Map from './components/Map/Map';
+import ActionButton from './components/TopBar/ActionButton';
+
 
 function App() {
   const [currentUser, setCurrentUser] = useAtom(currentUserAtom);
@@ -61,8 +62,7 @@ function App() {
 
   return (
     <div style={{
-      border: '1px dotted blue',
-      height: '99vh',
+      height: '100vh',
       display: 'flex',
       flexDirection: 'column',
     }}>
@@ -77,6 +77,7 @@ function App() {
         </BrowserRouter>
 
       </ThemeProvider>
+
     </div>
   );
 }
