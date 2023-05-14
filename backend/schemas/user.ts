@@ -4,7 +4,7 @@ export interface User {
     id: number;
     name: string;
     points: number;
-    seed: Seed[];
+    inventory: Seed[];
 }
 
 export default User;

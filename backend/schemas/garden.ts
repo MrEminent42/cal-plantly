@@ -5,6 +5,8 @@ interface Garden {
   name: string;
   plants: Plant[];
   latitude: number;
+  longitude: number;
+  radius: number;
 }
 
 export default Garden;
