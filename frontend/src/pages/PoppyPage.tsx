@@ -3,7 +3,7 @@ import { Box } from '@mui/system'
 import "./BookStyle.css";
 
 
-const PlantPage = () => {
+const PoppyPage = () => {
     return (
         <HomeDiv style={{
             flexGrow: 1,
@@ -11,25 +11,25 @@ const PlantPage = () => {
         }}>
             <div className='full-page'>
                 
-                <div className="book-title">Red Valerian</div>
+                <div className="book-title">California Poppy</div>
                 <div className='main'>
                     
                     <div className='leftside'>
                         <div className='plimage'>
-                        <img src="/images/red valerian.png" height="500" />
+                        <img src="/images/California Poppy.png" height="500" />
                         </div>
                     </div>
                     
                     <div className='maincontainer'>
                     <div className='notes'>
-                    Red Valerian<br />
-                    ‣ Centranthus ruber<br />
+                    California Poppy<br />
+                    ‣ Eschscholzia californica<br />
                     ‣ Full sun<br />
-                    ‣ 32 inches<br />
+                    ‣ 6 to 12 inches<br />
                     ‣ Sandy or rocky soil<br />
-                    ‣ Fertilize once when planted<br />
+                    ‣ No fertilizer<br />
                     <br />
-                    Initially from the Mediterranian region, this perennial attracts both bees and butterflies.<br />
+                    California Poppies are hardly flowers that grow in dry environments. The flowers close during night or on overcast or windy days.<br />
                     </div>
                     </div>
                 </div>
@@ -41,7 +41,7 @@ const PlantPage = () => {
     )
 }
 
-export default PlantPage
+export default PoppyPage
 
 const HomeDiv = styled(Box)(() => ({
     display: 'flex',
