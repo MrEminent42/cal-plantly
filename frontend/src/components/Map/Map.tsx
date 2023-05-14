@@ -100,7 +100,6 @@ const MarkersExample: React.FC = () => {
 
   const updateLocation = () => {
 
-    console.log("updating location");
     navigator.geolocation.getCurrentPosition(
       position => {
         const { longitude, latitude } = position.coords;
@@ -118,7 +117,6 @@ const MarkersExample: React.FC = () => {
 
   useEffect(() => {
     updateLocation();
-    console.log("setting timer");
     const interval = setInterval(updateLocation, 30000); // call the function every 30 seconds
     return () => clearInterval(interval);
   }, []);

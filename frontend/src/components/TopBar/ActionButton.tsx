@@ -11,10 +11,12 @@ import Person3Icon from '@mui/icons-material/Person3';
 import LibraryBooksIcon from '@mui/icons-material/LibraryBooks';
 import BusinessCenterIcon from '@mui/icons-material/BusinessCenter';
 import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
+import { useNavigate } from 'react-router-dom';
 
 const ActionButton = () => {
     const [menuOpen, setMenuOpen] = useState(false);
     var thing = process.env.REACT_APP_HELLO;
+    const navigate = useNavigate();
 
     return (
         <Box
@@ -63,7 +65,9 @@ const ActionButton = () => {
                 </Grow>
 
                 <Grow in={menuOpen} >
-                    <Fab size="small">
+                    <Fab size="small"
+                        onClick={() => navigate("book")}
+                    >
                         <LibraryBooksIcon />
                     </Fab>
                 </Grow>

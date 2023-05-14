@@ -8,10 +8,12 @@ import { getAuth, signOut } from '@firebase/auth';
 import fetchWeatherData from '../../api/getWeather';
 
 import ActionButton from './ActionButton';
+import { useNavigate } from 'react-router-dom';
 
 const TopBar = () => {
 
     const [icon, setIcon] = useState();
+    const navigate = useNavigate();
 
     async function fetchData() {
         await fetchWeatherData(process.env.REACT_APP_WEATHER_API_KEY || '', '93410').then((iconData) => {
@@ -20,6 +22,8 @@ const TopBar = () => {
     }
 
     fetchData();
+
+    console.log(icon);
 
     return (
         <AppBar sx={{
@@ -33,11 +37,14 @@ const TopBar = () => {
         }}>
             <ActionButton />
             <SideChip>
-                <img src={`https:${icon}`} alt="icon" />
+                {icon && (
+                    <img src={`https://${(icon as string).replace("//", "")}`} alt="icon" />
+                )}
             </SideChip>
             <Chip>
                 <Typography
                     sx={{ textAlign: 'center', fontSize: '2.3rem' }}
+                    onClick={() => navigate("/game")}
                 >
                     Cal Plantly
                 </Typography>

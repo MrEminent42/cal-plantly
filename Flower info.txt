@@ -1,0 +1,44 @@
+[COMMON NAME]
+[SCIENCE NAME]
+[LIGHT]
+[HEIGHT]
+[SOIL]
+[FERTILIZER?]
+[DESCRIPTION]
+
+-->[found], [image]
+
+California Poppy
+Eschscholzia californica
+Full sun
+6 to 12 inches
+Sandy or rocky soil
+No fertilizer
+
+California Poppies are hardly flowers that grow in dry environments. The flowers close during night or on overcast or windy days.
+
+--
+
+Red Valerian
+Centranthus ruber
+Full sun
+32 inches
+Sandy or rocky soil
+Fertilize once when planted
+
+Initially from the Mediterranian region, this perennial attracts both bees and butterflies.
+
+--
+
+Sweet Violet
+Viola odorata
+4 to 6 inches
+Partial sun, shade
+Moist, rich soil
+Fertilize with mulch
+
+Sweet violets are aromatic flowers that have often been used in perfumes and as a syrup in French cooking.
+
+--
+
+
