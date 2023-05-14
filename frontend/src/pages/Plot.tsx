@@ -1,23 +1,31 @@
-import styled from '@emotion/styled'
-import React from 'react'
-import { Box } from '@mui/system'
+import { useState } from 'react';
+import { Grid, Paper } from '@mui/material';
 
 const Plot = () => {
-    return (
-        <HomeDiv style={{
-            flexGrow: 1,
-        }}>
+  const [selected, setSelected] = useState<number | null>(null);
 
-            Plot
+  function handleClick(index: number): void {
+    setSelected(index);
+  }
 
-        </HomeDiv>
-    )
-}
+  return (
+    <main>
+      <h1>Plot</h1>
+      <Grid container spacing={2}>
+        {Array.from(Array(16)).map((_, index) => (
+          <Grid item xs={3} key={index}>
+            <Paper
+              onClick={() => handleClick(index)}
+              sx={{
+                height: 100,
+                cursor: 'pointer',
+              }}
+            />
+          </Grid>
+        ))}
+      </Grid>
+    </main>
+  );
+};
 
-export default Plot
-
-const HomeDiv = styled(Box)(() => ({
-    display: 'flex',
-    border: '1px solid red',
-    flex: 1,
-}))
+export default Plot;

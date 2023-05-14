@@ -227,10 +227,6 @@ const MarkersExample: React.FC = () => {
               <AzureMapLayerProvider
                 id={'markersExample AzureMapLayerProvider'}
                 options={layerOptions}
-                events={{
-                  click: clusterClicked,
-                  dbclick: clusterClicked,
-                }}
                 lifecycleEvents={{
                   layeradded: () => {
                     console.log('LAYER ADDED TO MAP');

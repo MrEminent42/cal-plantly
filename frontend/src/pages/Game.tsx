@@ -5,6 +5,7 @@ import Map from '../components/Map/Map'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import PlantInfo from './PlantInfo'
 import PlantBook from './PlantBook'
+import Plot from './Plot'
 
 const Game = () => {
 
@@ -19,6 +20,7 @@ const Game = () => {
                 <Route path="/" element={<Map />} />
                 <Route path="/plant" element={<PlantInfo />} />
                 <Route path="/book" element={<PlantBook />} />
+                <Route path="/plot" element={<Plot />} />
             </Routes>
 
         </HomeDiv>
